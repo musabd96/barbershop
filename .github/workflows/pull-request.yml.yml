@@ -18,17 +18,17 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Format the code
-        working-directory: ./barbershop  # Adjust this path if needed
+        working-directory: ./back-end  # Adjust this path if needed
         run: dotnet format --verbosity diagnostic --verify-no-changes
 
       - name: Restore dependencies
-        working-directory: ./barbershop  # Ensure you are in the correct directory
+        working-directory: ./back-end  # Ensure you are in the correct directory
         run: dotnet restore --disable-parallel
 
       - name: Build the solution
-        working-directory: ./barbershop  # Ensure you are in the correct directory
+        working-directory: ./back-end  # Ensure you are in the correct directory
         run: dotnet build --no-restore
 
       - name: Run all tests
-        working-directory: ./barbershop  # Ensure you are in the correct directory
+        working-directory: ./back-end  # Ensure you are in the correct directory
         run: dotnet test --no-build --verbosity normal --no-restore
