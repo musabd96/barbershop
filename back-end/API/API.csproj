@@ -20,7 +20,7 @@
     <Folder Include="Controllers\AppointmentController\" />
     <Folder Include="Controllers\CustomerController\" />
     <Folder Include="Controllers\BarberController\" />
-    <Folder Include="Controllers\AuthenticationController\" />
+    <Folder Include="Controllers\UserController\" />
   </ItemGroup>
 
 </Project>
