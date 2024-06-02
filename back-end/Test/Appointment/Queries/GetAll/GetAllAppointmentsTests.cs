@@ -17,7 +17,7 @@ namespace Application.Queries.Appointments.GetAllAppointments
         {
             _appointmentRepositories = new Mock<IAppointmentRepositories>();
             _handler = new GetAllAppointmentsQueryHandler(_appointmentRepositories.Object);
-            _request = new GetAllAppointmentsQuery(); 
+            _request = new GetAllAppointmentsQuery();
         }
 
         protected void SetupMockDbContext(List<Appointment> appointments)
