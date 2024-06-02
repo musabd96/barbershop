@@ -1,11 +1,7 @@
 ﻿using Domain.Models.Appointments;
 using Infrastructure.Repositories.Appointments;
 using Moq;
-using NUnit.Framework; // Make sure you have the correct using statement for NUnit
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Application.Queries.Appointments.GetAllAppointments
 {
@@ -21,13 +17,13 @@ namespace Application.Queries.Appointments.GetAllAppointments
         {
             _appointmentRepositories = new Mock<IAppointmentRepositories>();
             _handler = new GetAllAppointmentsQueryHandler(_appointmentRepositories.Object);
-            _request = new GetAllAppointmentsQuery(); // Ensure this matches the correct GetAllAppointmentsQuery class
+            _request = new GetAllAppointmentsQuery(); 
         }
 
         protected void SetupMockDbContext(List<Appointment> appointments)
         {
             _appointmentRepositories.Setup(repo => repo.GetAllAppointments(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(appointments);
+                                   .ReturnsAsync(appointments);
         }
 
         [Test]
@@ -46,15 +42,15 @@ namespace Application.Queries.Appointments.GetAllAppointments
             var result = await _handler.Handle(_request, CancellationToken.None);
 
             // Assert
-            NUnit.Framework.Assert.That(result.Count, Is.EqualTo(appointmentsList.Count)); 
+            NUnit.Framework.Assert.That(result.Count, Is.EqualTo(appointmentsList.Count));
         }
 
         [Test]
         public async Task Handle_EmptyList_ReturnsEmptyList()
         {
             // Arrange
-            var emptyappointmentsList = new List<Appointment>();
-            SetupMockDbContext(emptyappointmentsList);
+            var emptyAppointmentsList = new List<Appointment>();
+            SetupMockDbContext(emptyAppointmentsList);
 
             // Act
             var result = await _handler.Handle(_request, CancellationToken.None);
