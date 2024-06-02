@@ -33,6 +33,7 @@ namespace Application.Queries.Appointments.GetAllAppointments
             var appointmentsList = new List<Appointment>
             {
                 new Appointment { Id = Guid.NewGuid(), CustomerId = Guid.NewGuid(), BarberId = Guid.NewGuid(), AppointmentDate = new DateOnly(), Service = "Cutting", Price = 20.00m, IsCancelled = false },
+
                 new Appointment { Id = Guid.NewGuid(), CustomerId = Guid.NewGuid(), BarberId = Guid.NewGuid(), AppointmentDate = new DateOnly(), Service = "Cutting", Price = 20.00m, IsCancelled = false },
             };
 
