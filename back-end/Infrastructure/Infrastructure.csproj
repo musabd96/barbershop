@@ -27,11 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AppDbContext\" />
-    <Folder Include="Repositories\Barbers\" />
-    <Folder Include="Repositories\Customers\" />
-    <Folder Include="Repositories\Users\" />
-    <Folder Include="Repositories\Appointments\" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\test\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|solutionrelative:test\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\test\\appointment\\queries\\getall\\getallappointmentstests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|solutionrelative:test\\appointment\\queries\\getall\\getallappointmentstests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CDD55E23-9B62-45D3-9A84-2DCF07AFB017}|Infrastructure\\Infrastructure.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\infrastructure\\infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{CDD55E23-9B62-45D3-9A84-2DCF07AFB017}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CDD55E23-9B62-45D3-9A84-2DCF07AFB017}|Infrastructure\\Infrastructure.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CDD55E23-9B62-45D3-9A84-2DCF07AFB017}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7780AAE3-5C35-47D7-A8D2-933BA060AC67}|Domain\\Domain.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\domain\\domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{7780AAE3-5C35-47D7-A8D2-933BA060AC67}|Domain\\Domain.csproj|solutionrelative:domain\\domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Application\\Class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\application\\queries\\appointments\\getallappointments\\getallappointmentsquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|solutionrelative:application\\queries\\appointments\\getallappointments\\getallappointmentsquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,74 +18,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UnitTest1.cs",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\UnitTest1.cs",
-              "RelativeDocumentMoniker": "Test\\UnitTest1.cs",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\UnitTest1.cs",
-              "RelativeToolTip": "Test\\UnitTest1.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T15:15:57.015Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Infrastructure",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Infrastructure\\Infrastructure.csproj",
-              "RelativeDocumentMoniker": "Infrastructure\\Infrastructure.csproj",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Infrastructure\\Infrastructure.csproj",
-              "RelativeToolTip": "Infrastructure\\Infrastructure.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-06-01T15:11:54.475Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DependencyInjection.cs",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Infrastructure\\DependencyInjection.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\DependencyInjection.cs",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Infrastructure\\DependencyInjection.cs",
-              "RelativeToolTip": "Infrastructure\\DependencyInjection.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 1,
+              "Title": "GetAllAppointmentsQuery.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Queries\\Appointments\\GetAllAppointments\\GetAllAppointmentsQuery.cs",
+              "RelativeDocumentMoniker": "Application\\Queries\\Appointments\\GetAllAppointments\\GetAllAppointmentsQuery.cs",
+              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Queries\\Appointments\\GetAllAppointments\\GetAllAppointmentsQuery.cs",
+              "RelativeToolTip": "Application\\Queries\\Appointments\\GetAllAppointments\\GetAllAppointmentsQuery.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T15:08:12.052Z",
+              "WhenOpened": "2024-06-02T12:54:46.421Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Domain",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Domain\\Domain.csproj",
-              "RelativeDocumentMoniker": "Domain\\Domain.csproj",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Domain\\Domain.csproj",
-              "RelativeToolTip": "Domain\\Domain.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-06-01T15:07:17.748Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Class1.cs",
-              "RelativeDocumentMoniker": "Application\\Class1.cs",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Class1.cs",
-              "RelativeToolTip": "Application\\Class1.cs",
+              "DocumentIndex": 0,
+              "Title": "GetAllAppointmentsTests.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Queries\\GetAll\\GetAllAppointmentsTests.cs",
+              "RelativeDocumentMoniker": "Test\\Appointment\\Queries\\GetAll\\GetAllAppointmentsTests.cs",
+              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Queries\\GetAll\\GetAllAppointmentsTests.cs",
+              "RelativeToolTip": "Test\\Appointment\\Queries\\GetAll\\GetAllAppointmentsTests.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAowCMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T14:26:26.656Z"
+              "WhenOpened": "2024-06-02T12:45:00.673Z",
+              "EditorCaption": ""
             }
           ]
         }
