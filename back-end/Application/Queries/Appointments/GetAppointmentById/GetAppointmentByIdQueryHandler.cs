@@ -17,7 +17,7 @@ namespace Application.Queries.Appointments.GetAppointmentById
 
         public async Task<Appointment> Handle(GetAppointmentByIdQuery request, CancellationToken cancellationToken)
         {
-            Appointment appointment = await  _appointmentRepositories.GetAppointmentById(request.Id, cancellationToken);
+            Appointment appointment = await _appointmentRepositories.GetAppointmentById(request.Id, cancellationToken);
 
             return appointment;
         }
