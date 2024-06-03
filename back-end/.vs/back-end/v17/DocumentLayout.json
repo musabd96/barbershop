@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\test\\appointment\\queries\\getbyid\\getallappointmentbyidtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|solutionrelative:test\\appointment\\queries\\getbyid\\getallappointmentbyidtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\test\\appointment\\commands\\appointment\\addnewappoinmentcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|solutionrelative:test\\appointment\\commands\\appointment\\addnewappoinmentcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07FAEE70-D884-479A-848F-EFA49A7AA5C9}|API\\API.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\api\\controllers\\appointmentcontroller\\appointmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07FAEE70-D884-479A-848F-EFA49A7AA5C9}|API\\API.csproj|solutionrelative:api\\controllers\\appointmentcontroller\\appointmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\application\\commands\\appointments\\addnewappoinment\\addnewappointmentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|solutionrelative:application\\commands\\appointments\\addnewappoinment\\addnewappointmentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,29 +22,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            }
-          ]
-        },
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GetAllAppointmentByIdTests.cs",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Queries\\GetById\\GetAllAppointmentByIdTests.cs",
-              "RelativeDocumentMoniker": "Test\\Appointment\\Queries\\GetById\\GetAllAppointmentByIdTests.cs",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Queries\\GetById\\GetAllAppointmentByIdTests.cs*",
-              "RelativeToolTip": "Test\\Appointment\\Queries\\GetById\\GetAllAppointmentByIdTests.cs*",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAUwEUAAABSAAAA",
+              "DocumentIndex": 2,
+              "Title": "AddNewAppointmentCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Commands\\Appointments\\AddNewAppoinment\\AddNewAppointmentCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Commands\\Appointments\\AddNewAppoinment\\AddNewAppointmentCommandHandler.cs",
+              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Commands\\Appointments\\AddNewAppoinment\\AddNewAppointmentCommandHandler.cs",
+              "RelativeToolTip": "Application\\Commands\\Appointments\\AddNewAppoinment\\AddNewAppointmentCommandHandler.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-03T15:49:05.904Z",
+              "WhenOpened": "2024-06-03T17:32:56.456Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppointmentController.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\API\\Controllers\\AppointmentController\\AppointmentController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AppointmentController\\AppointmentController.cs",
+              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\API\\Controllers\\AppointmentController\\AppointmentController.cs",
+              "RelativeToolTip": "API\\Controllers\\AppointmentController\\AppointmentController.cs",
+              "ViewState": "AQIAACcAAAAAAAAAAAAowEEAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-03T17:29:13.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AddNewAppoinmentControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Commands\\Appointment\\AddNewAppoinmentControllerTests.cs",
+              "RelativeDocumentMoniker": "Test\\Appointment\\Commands\\Appointment\\AddNewAppoinmentControllerTests.cs",
+              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Commands\\Appointment\\AddNewAppoinmentControllerTests.cs*",
+              "RelativeToolTip": "Test\\Appointment\\Commands\\Appointment\\AddNewAppoinmentControllerTests.cs*",
+              "ViewState": "AQIAACYAAAAAAAAAAADwv00AAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-03T17:28:46.686Z",
               "EditorCaption": ""
             }
           ]

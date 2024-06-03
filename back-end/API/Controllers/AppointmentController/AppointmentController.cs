@@ -1,8 +1,10 @@
-﻿using Application.Queries.Appointments.GetAllAppointments;
+﻿using Application.Dtos;
+using Application.Queries.Appointments.GetAllAppointments;
 using Application.Queries.Appointments.GetAppointmentById;
 using Domain.Models.Appointments;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Application.Commands.Appointments.AddNewAppoinment;
 
 namespace API.Controllers.AppointmentController
 {
@@ -60,5 +62,30 @@ namespace API.Controllers.AppointmentController
             }
 
         }
+
+        // Create new appointment
+        [HttpPost]
+        [Route("addNewAppointment")]
+        public async Task<IActionResult> AddNewAppointment([FromBody] AppointmentDto appointmentDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var command = new AddNewAppointmentCommand(appointmentDto);
+                var result = await _mediator.Send(command);
+
+                return Ok(result); // Return successful result
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message); // Handle unexpected exceptions
+            }
+        }
+
+
     }
 }

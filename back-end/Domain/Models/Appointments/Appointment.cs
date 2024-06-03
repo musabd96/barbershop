@@ -6,7 +6,7 @@ namespace Domain.Models.Appointments
         public Guid Id { get; set; }
         public Guid CustomerId { get; set; }
         public Guid BarberId { get; set; }
-        public DateOnly AppointmentDate { get; set; }
+        public DateTime AppointmentDate { get; set; }
         public string Service { get; set; }
         public decimal Price { get; set; }
         public bool IsCancelled { get; set; }

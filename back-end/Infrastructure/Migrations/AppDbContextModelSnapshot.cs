@@ -28,8 +28,8 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateOnly>("AppointmentDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("BarberId")
                         .HasColumnType("char(36)");
@@ -54,10 +54,10 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("21429651-05f5-48fc-9981-0838ebe244b7"),
-                            AppointmentDate = new DateOnly(2024, 6, 10),
-                            BarberId = new Guid("b58d480d-53ea-4a67-b78b-6205a9b2f819"),
-                            CustomerId = new Guid("2efeb6a2-bbac-4cff-82fa-0518c1c46a1c"),
+                            Id = new Guid("dd5960f1-8b3d-4282-9125-30a20af46b82"),
+                            AppointmentDate = new DateTime(2024, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BarberId = new Guid("9a72fd72-c327-4a78-b36b-0c72882970f5"),
+                            CustomerId = new Guid("99040076-dbd4-4b2c-aa12-d4ff9a459573"),
                             IsCancelled = false,
                             Price = 20.00m,
                             Service = "Cutting"

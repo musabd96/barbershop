@@ -27,19 +27,36 @@ namespace Infrastructure.Repositories.Appointments
             }
         }
 
-        public async Task<Appointment?> GetAppointmentById(Guid id, CancellationToken cancellationToken)
+        public async Task<Appointment> GetAppointmentById(Guid id, CancellationToken cancellationToken)
         {
             try
             {
                 Appointment? wantedAppointment = await _appDbContext.Appointment
                     .FirstOrDefaultAsync(appointment => appointment.Id == id, cancellationToken);
 
-                return wantedAppointment;
+                return wantedAppointment!;
             }
             catch (Exception ex)
             {
                 throw new Exception("An error occurred while getting the appointment from the database", ex);
             }
         }
+
+
+        public Task<Appointment> AddNewAppoinment(Appointment newAppointment, CancellationToken cancellationToken)
+        {
+            try
+            {
+                _appDbContext.Appointment.Add(newAppointment);
+                _appDbContext.SaveChangesAsync(cancellationToken);
+                return Task.FromResult(newAppointment);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while adding the appointment to the database", ex);
+            }
+        }
+
+
     }
 }
