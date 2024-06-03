@@ -15,7 +15,7 @@ namespace Infrastructure.Database
                     Id = Guid.NewGuid(),
                     CustomerId = Guid.NewGuid(),
                     BarberId = Guid.NewGuid(),
-                    AppointmentDate = new DateOnly(2024, 06, 10),
+                    AppointmentDate = new DateTime(2024, 06, 10),
                     Service = "Cutting",
                     Price = 20.00m,
                     IsCancelled = false,

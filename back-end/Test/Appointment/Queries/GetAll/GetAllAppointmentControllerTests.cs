@@ -7,7 +7,8 @@ using NUnit.Framework;
 
 namespace Test.Appointment.Queries.GetAll
 {
-    internal class GetAllAppointmentControllerTests
+    [TestFixture]
+    public class GetAllAppointmentControllerTests
     {
         private IMediator _mediator;
         private AppointmentController _controller;
@@ -38,7 +39,7 @@ namespace Test.Appointment.Queries.GetAll
                     Id = new Guid(),
                     BarberId = new Guid(),
                     CustomerId = new Guid(),
-                    AppointmentDate = new DateOnly(),
+                    AppointmentDate = new DateTime(),
                     Service = "Hair",
                     Price = 20.0m,
                     IsCancelled = false,
@@ -47,7 +48,7 @@ namespace Test.Appointment.Queries.GetAll
                     Id = new Guid(),
                     BarberId = new Guid(),
                     CustomerId = new Guid(),
-                    AppointmentDate = new DateOnly(),
+                    AppointmentDate = new DateTime(),
                     Service = "beard",
                     Price = 20.0m,
                     IsCancelled = false,
