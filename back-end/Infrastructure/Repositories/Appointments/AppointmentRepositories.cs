@@ -15,7 +15,31 @@ namespace Infrastructure.Repositories.Appointments
         }
         public async Task<List<Appointment>> GetAllAppointments(CancellationToken cancellationToken)
         {
-            return await _appDbContext.Appointment.ToListAsync(cancellationToken);
+            try
+            {
+                List<Appointment> allAppointments = await _appDbContext.Appointment.ToListAsync(cancellationToken);
+
+                return allAppointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while getting all appointments from the database", ex);
+            }
+        }
+
+        public async Task<Appointment?> GetAppointmentById(Guid id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                Appointment? wantedAppointment = await _appDbContext.Appointment
+                    .FirstOrDefaultAsync(appointment => appointment.Id == id, cancellationToken);
+
+                return wantedAppointment;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while getting the appointment from the database", ex);
+            }
         }
     }
 }
