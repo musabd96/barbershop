@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\test\\appointment\\queries\\getall\\getallappointmentstests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|solutionrelative:test\\appointment\\queries\\getall\\getallappointmentstests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\application\\queries\\appointments\\getallappointments\\getallappointmentsquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|solutionrelative:application\\queries\\appointments\\getallappointments\\getallappointmentsquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\test\\appointment\\queries\\getbyid\\getallappointmentbyidtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|solutionrelative:test\\appointment\\queries\\getbyid\\getallappointmentbyidtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,36 +14,29 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "GetAllAppointmentsQuery.cs",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Queries\\Appointments\\GetAllAppointments\\GetAllAppointmentsQuery.cs",
-              "RelativeDocumentMoniker": "Application\\Queries\\Appointments\\GetAllAppointments\\GetAllAppointmentsQuery.cs",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Queries\\Appointments\\GetAllAppointments\\GetAllAppointmentsQuery.cs",
-              "RelativeToolTip": "Application\\Queries\\Appointments\\GetAllAppointments\\GetAllAppointmentsQuery.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-02T12:54:46.421Z",
-              "EditorCaption": ""
-            },
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "GetAllAppointmentsTests.cs",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Queries\\GetAll\\GetAllAppointmentsTests.cs",
-              "RelativeDocumentMoniker": "Test\\Appointment\\Queries\\GetAll\\GetAllAppointmentsTests.cs",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Queries\\GetAll\\GetAllAppointmentsTests.cs",
-              "RelativeToolTip": "Test\\Appointment\\Queries\\GetAll\\GetAllAppointmentsTests.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAowCMAAAAAAAAA",
+              "Title": "GetAllAppointmentByIdTests.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Queries\\GetById\\GetAllAppointmentByIdTests.cs",
+              "RelativeDocumentMoniker": "Test\\Appointment\\Queries\\GetById\\GetAllAppointmentByIdTests.cs",
+              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Queries\\GetById\\GetAllAppointmentByIdTests.cs*",
+              "RelativeToolTip": "Test\\Appointment\\Queries\\GetById\\GetAllAppointmentByIdTests.cs*",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAUwEUAAABSAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-02T12:45:00.673Z",
+              "WhenOpened": "2024-06-03T15:49:05.904Z",
               "EditorCaption": ""
             }
           ]

@@ -1,4 +1,5 @@
 ﻿using Application.Queries.Appointments.GetAllAppointments;
+using Application.Queries.Appointments.GetAppointmentById;
 using Domain.Models.Appointments;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,28 @@ namespace API.Controllers.AppointmentController
             {
                 return StatusCode(500, ex.Message);
             }
+        }
+
+        //Get an appointment by id
+        [HttpGet]
+        [Route("getAppointmentById/{appointmentId}")]
+        public async Task<IActionResult> GetAppointmentById(Guid appointmentId)
+        {
+            try
+            {
+                Appointment appointment = await _mediator.Send(new GetAppointmentByIdQuery(appointmentId));
+                if (appointment == null)
+                {
+                    ModelState.AddModelError("AppointmentNotFound", $"This appointment Id {appointmentId} is not found");
+                    return BadRequest(ModelState);
+                }
+                return Ok(appointment);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
     }
 }

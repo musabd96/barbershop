@@ -29,10 +29,10 @@ namespace Test.Appointment.Queries.GetAll
         }
 
         [Test]
-        public async Task GetAllClassrooms_ShouldReturnOk()
+        public async Task GetAllAppointments_ShouldReturnOk()
         {
             // Arrange
-            var expectedClassrooms = new List<Domain.Models.Appointments.Appointment>
+            var expectedAppointments = new List<Domain.Models.Appointments.Appointment>
             {
                 new() {
                     Id = new Guid(),
@@ -58,7 +58,7 @@ namespace Test.Appointment.Queries.GetAll
 
             Mock.Get(_mediator)
                 .Setup(x => x.Send(It.IsAny<GetAllAppointmentsQuery>(), default))
-                .ReturnsAsync(expectedClassrooms);
+                .ReturnsAsync(expectedAppointments);
 
             // Act
             var result = await _controller.GetAllAppointments();
@@ -72,7 +72,7 @@ namespace Test.Appointment.Queries.GetAll
         }
 
         [Test]
-        public async Task GetAllClassrooms_ShouldReturnInternalServerErrorOnException()
+        public async Task GetAllAppointments_ShouldReturnInternalServerErrorOnException()
         {
             // Arrange
             Mock.Get(_mediator)
