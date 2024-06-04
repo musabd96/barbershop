@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.Commands.Appointments.AddNewAppoinment;
 using Application.Commands.Appointments.UpdateAppointment;
+using Application.Commands.Appointments.DeleteAppointment;
 
 namespace API.Controllers.AppointmentController
 {
@@ -89,8 +90,8 @@ namespace API.Controllers.AppointmentController
 
         // update appointment
         [HttpPost]
-        [Route("updateAppointment{appointmentId}")]
-        public async Task<IActionResult> UpdateAppointment([FromBody] AppointmentDto appointmentDto, Guid appointmentId)
+        [Route("updateAppointment/{appointmentId}")]
+        public async Task<IActionResult> UpdateAppointment(AppointmentDto appointmentDto, Guid appointmentId)
         {
             try
             {
@@ -108,6 +109,27 @@ namespace API.Controllers.AppointmentController
                 }
 
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // delete appointment
+        [HttpDelete]
+        [Route("deleteAppointment/{appointmentId}")]
+        public async Task<IActionResult> DeleteAppointment(Guid appointmentId)
+        {
+            try
+            {
+                Appointment appointment = await _mediator.Send(new DeleteAppointmentCommand(appointmentId));
+                if (appointment == null)
+                {
+                    ModelState.AddModelError("AppointmentNotFound", $"This appointment Id {appointmentId} is not found");
+                    return BadRequest(ModelState);
+                }
+                return Ok(appointment);
             }
             catch (Exception ex)
             {
