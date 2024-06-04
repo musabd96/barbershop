@@ -57,6 +57,26 @@ namespace Infrastructure.Repositories.Appointments
             }
         }
 
+        public async Task<Appointment> UpdateAppointment(Guid appointmentId, Guid CustomerId, Guid barberId, DateTime appointmentDate, string service, decimal price, bool isCancelled, CancellationToken cancellationToken)
+        {
+            Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
+
+            if (appointmentToUpdate != null)
+            {
+                appointmentToUpdate.BarberId = barberId;
+                appointmentToUpdate.AppointmentDate = appointmentDate;
+                appointmentToUpdate.Service = service;
+                appointmentToUpdate.Price = price;
+                appointmentToUpdate.IsCancelled = isCancelled;
+
+                _appDbContext.Appointment.Update(appointmentToUpdate);
+                await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                return appointmentToUpdate;
+            }
+
+            return null!;
+        }
 
     }
 }

@@ -7,5 +7,13 @@ namespace Infrastructure.Repositories.Appointments
         Task<List<Appointment>> GetAllAppointments(CancellationToken cancellationToken);
         Task<Appointment> GetAppointmentById(Guid id, CancellationToken cancellationToken);
         Task<Appointment> AddNewAppoinment(Appointment newAppointment, CancellationToken cancellationToken);
+        Task<Appointment> UpdateAppointment(Guid appointmentId,
+                                             Guid CustomerId,
+                                             Guid BarberId,
+                                             DateTime AppointmentDate,
+                                             string Service,
+                                             decimal Price,
+                                             bool IsCancelled
+                                            , CancellationToken cancellationToken);
     }
 }
