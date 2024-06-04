@@ -59,24 +59,54 @@ namespace Infrastructure.Repositories.Appointments
 
         public async Task<Appointment> UpdateAppointment(Guid appointmentId, Guid CustomerId, Guid barberId, DateTime appointmentDate, string service, decimal price, bool isCancelled, CancellationToken cancellationToken)
         {
-            Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
-
-            if (appointmentToUpdate != null)
+            try
             {
-                appointmentToUpdate.BarberId = barberId;
-                appointmentToUpdate.AppointmentDate = appointmentDate;
-                appointmentToUpdate.Service = service;
-                appointmentToUpdate.Price = price;
-                appointmentToUpdate.IsCancelled = isCancelled;
+                Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
 
-                _appDbContext.Appointment.Update(appointmentToUpdate);
-                await _appDbContext.SaveChangesAsync(cancellationToken);
+                if (appointmentToUpdate != null)
+                {
+                    appointmentToUpdate.BarberId = barberId;
+                    appointmentToUpdate.AppointmentDate = appointmentDate;
+                    appointmentToUpdate.Service = service;
+                    appointmentToUpdate.Price = price;
+                    appointmentToUpdate.IsCancelled = isCancelled;
 
-                return appointmentToUpdate;
+                    _appDbContext.Appointment.Update(appointmentToUpdate);
+                    await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                    return appointmentToUpdate;
+                }
+
+                return null!;
             }
-
-            return null!;
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while updating the appointment to the database", ex);
+            }
         }
 
+        public async Task<Appointment> DeleteAppointment(Guid appointmentId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
+
+                if (appointmentToUpdate != null)
+                {
+
+
+                    _appDbContext.Appointment.Remove(appointmentToUpdate);
+                    await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                    return appointmentToUpdate;
+                }
+
+                return null!;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the appointment to the database", ex);
+            }
+        }
     }
 }

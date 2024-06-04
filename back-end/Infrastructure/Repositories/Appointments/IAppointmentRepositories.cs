@@ -15,5 +15,6 @@ namespace Infrastructure.Repositories.Appointments
                                              decimal Price,
                                              bool IsCancelled
                                             , CancellationToken cancellationToken);
+        Task<Appointment> DeleteAppointment(Guid appointmentId, CancellationToken cancellationToken);
     }
 }

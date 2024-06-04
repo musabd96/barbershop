@@ -17,16 +17,16 @@ namespace Application.Commands.Appointments.AddNewAppoinment
         {
             Appointment newAppointment = new Appointment()
             {
-                Id = Guid.NewGuid(),
-                CustomerId = Guid.NewGuid(),
-                BarberId = Guid.NewGuid(),
+                Id = request.NewAppointment.Id,
+                CustomerId = request.NewAppointment.CustomerId,
+                BarberId = request.NewAppointment.CustomerId,
                 AppointmentDate = request.NewAppointment.AppointmentDate,
                 Service = request.NewAppointment.Service,
                 Price = request.NewAppointment.Price,
                 IsCancelled = request.NewAppointment.IsCancelled,
             };
 
-            _appointmentRepositories.AddNewAppoinment(newAppointment, cancellationToken);
+            await _appointmentRepositories.AddNewAppoinment(newAppointment, cancellationToken);
 
             return newAppointment;
         }
