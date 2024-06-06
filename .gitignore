@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 # Uncomment the next line to include Migrations folder
 !Migrations/
+/back-end/.vs/back-end/v17/DocumentLayout.json
+/back-end/.vs/back-end/v17/.suo
