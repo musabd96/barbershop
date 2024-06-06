@@ -4,6 +4,7 @@ using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240603172359_SeedAppointment")]
+    partial class SeedAppointment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,10 +57,10 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("691cbf7e-9cdc-49a4-a1e6-ebc6d1544092"),
+                            Id = new Guid("dd5960f1-8b3d-4282-9125-30a20af46b82"),
                             AppointmentDate = new DateTime(2024, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            BarberId = new Guid("bac198d9-2453-4178-8f5b-7ea6dabde951"),
-                            CustomerId = new Guid("f6be4dcd-fa9b-45c2-bfd2-aad40c1f6d4e"),
+                            BarberId = new Guid("9a72fd72-c327-4a78-b36b-0c72882970f5"),
+                            CustomerId = new Guid("99040076-dbd4-4b2c-aa12-d4ff9a459573"),
                             IsCancelled = false,
                             Price = 20.00m,
                             Service = "Cutting"

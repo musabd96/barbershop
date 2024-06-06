@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Application.Commands.Appointments.AddNewAppoinment;
 using Application.Commands.Appointments.UpdateAppointment;
 using Application.Commands.Appointments.DeleteAppointment;
+using FluentValidation.Results;
+using Application.Validators.Appointmnet;
 
 namespace API.Controllers.AppointmentController
 {
@@ -15,10 +17,12 @@ namespace API.Controllers.AppointmentController
     public class AppointmentController : Controller
     {
         internal readonly IMediator _mediator;
+        internal readonly AppointmentValidator _validator;
 
-        public AppointmentController(IMediator mediator)
+        public AppointmentController(IMediator mediator, AppointmentValidator validator)
         {
             _mediator = mediator;
+            _validator = validator;
         }
 
         //Get all Appointments
@@ -31,11 +35,14 @@ namespace API.Controllers.AppointmentController
                 var query = new GetAllAppointmentsQuery();
                 var result = await _mediator.Send(query);
 
-                if (!(result is not List<Appointment> appointment || appointment.Count == 0))
+                if (result is List<Appointment> appointments && appointments.Count > 0)
                 {
-                    return Ok(appointment);
+                    return Ok(appointments);
                 }
-                else { return Ok(); }
+                else
+                {
+                    return Ok();
+                }
             }
             catch (Exception ex)
             {
@@ -62,18 +69,22 @@ namespace API.Controllers.AppointmentController
             {
                 return StatusCode(500, ex.Message);
             }
-
         }
 
-        // Create new appointment
         [HttpPost]
         [Route("addNewAppointment")]
         public async Task<IActionResult> AddNewAppointment([FromBody] AppointmentDto appointmentDto)
         {
             try
             {
-                if (!ModelState.IsValid)
+                var validationResult = _validator.Validate(appointmentDto);
+
+                if (!validationResult.IsValid)
                 {
+                    foreach (var error in validationResult.Errors)
+                    {
+                        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                    }
                     return BadRequest(ModelState);
                 }
 
@@ -91,22 +102,23 @@ namespace API.Controllers.AppointmentController
         // update appointment
         [HttpPost]
         [Route("updateAppointment/{appointmentId}")]
-        public async Task<IActionResult> UpdateAppointment(AppointmentDto appointmentDto, Guid appointmentId)
+        public async Task<IActionResult> UpdateAppointment([FromBody] AppointmentDto appointmentDto, Guid appointmentId)
         {
             try
             {
-                if (!ModelState.IsValid)
+                ValidationResult validationResult = await _validator.ValidateAsync(appointmentDto);
+
+                if (!validationResult.IsValid)
                 {
+                    foreach (var error in validationResult.Errors)
+                    {
+                        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                    }
                     return BadRequest(ModelState);
                 }
 
                 var command = new UpdateAppointmentCommand(appointmentDto, appointmentId);
                 var result = await _mediator.Send(command);
-
-                if (result == null)
-                {
-                    return NotFound();
-                }
 
                 return Ok(result);
             }
@@ -115,6 +127,7 @@ namespace API.Controllers.AppointmentController
                 return StatusCode(500, ex.Message);
             }
         }
+
 
         // delete appointment
         [HttpDelete]
@@ -136,7 +149,5 @@ namespace API.Controllers.AppointmentController
                 return StatusCode(500, ex.Message);
             }
         }
-
-
     }
 }

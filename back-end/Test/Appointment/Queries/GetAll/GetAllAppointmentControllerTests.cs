@@ -1,5 +1,6 @@
 ﻿using API.Controllers.AppointmentController;
 using Application.Queries.Appointments.GetAllAppointments;
+using Application.Validators.Appointmnet;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -11,13 +12,15 @@ namespace Test.Appointment.Queries.GetAll
     public class GetAllAppointmentControllerTests
     {
         private IMediator _mediator;
+        private AppointmentValidator _validator;
         private AppointmentController _controller;
 
         [SetUp]
         public void Setup()
         {
             _mediator = Mock.Of<IMediator>();
-            _controller = new AppointmentController(_mediator);
+            _validator = Mock.Of<AppointmentValidator>(); // Mock the validator
+            _controller = new AppointmentController(_mediator, _validator);
         }
 
         [TearDown]

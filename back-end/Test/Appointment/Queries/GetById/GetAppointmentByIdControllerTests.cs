@@ -1,12 +1,14 @@
 ﻿using API.Controllers;
 using API.Controllers.AppointmentController;
 using Application.Queries.Appointments.GetAppointmentById;
+using Application.Validators.Appointmnet;
 using Domain.Models.Appointments;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Test.Appointment.Queries.GetById
@@ -14,23 +16,22 @@ namespace Test.Appointment.Queries.GetById
     [TestFixture]
     public class GetAppointmentByIdControllerTests
     {
-        private Mock<IMediator> _mediator;
+        private Mock<IMediator> _mediatorMock;
+        private Mock<AppointmentValidator> _validatorMock;
         private AppointmentController _controller;
 
         [SetUp]
         public void Setup()
         {
-            _mediator = new Mock<IMediator>();
-            _controller = new AppointmentController(_mediator.Object);
+            _mediatorMock = new Mock<IMediator>();
+            _validatorMock = new Mock<AppointmentValidator>(); // Mock the validator
+            _controller = new AppointmentController(_mediatorMock.Object, _validatorMock.Object);
         }
 
         [TearDown]
         public void TearDown()
         {
-            if (_controller != null)
-            {
-                _controller.Dispose();
-            }
+            _controller?.Dispose();
         }
 
         [Test]
@@ -50,8 +51,8 @@ namespace Test.Appointment.Queries.GetById
 
             var query = new GetAppointmentByIdQuery(expectedAppointment.Id);
 
-            _mediator.Setup(x => x.Send(It.Is<GetAppointmentByIdQuery>(q => q.Id == expectedAppointment.Id), default))
-                     .ReturnsAsync(expectedAppointment);
+            _mediatorMock.Setup(x => x.Send(It.Is<GetAppointmentByIdQuery>(q => q.Id == expectedAppointment.Id), It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(expectedAppointment);
 
             // Act
             var result = await _controller.GetAppointmentById(expectedAppointment.Id);
@@ -69,8 +70,8 @@ namespace Test.Appointment.Queries.GetById
         {
             // Arrange
             var invalidAppointmentId = Guid.NewGuid();
-            _mediator.Setup(x => x.Send(It.IsAny<GetAppointmentByIdQuery>(), It.IsAny<CancellationToken>()))
-                     .ThrowsAsync(new Exception("Simulated database error"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<GetAppointmentByIdQuery>(), It.IsAny<CancellationToken>()))
+                         .ThrowsAsync(new Exception("Simulated database error"));
 
             // Act
             var result = await _controller.GetAppointmentById(invalidAppointmentId);
@@ -80,8 +81,8 @@ namespace Test.Appointment.Queries.GetById
             {
                 NUnit.Framework.Assert.That(result, Is.InstanceOf<ObjectResult>());
                 NUnit.Framework.Assert.That((result as ObjectResult)?.StatusCode, Is.EqualTo(500));
+                NUnit.Framework.Assert.That((result as ObjectResult)?.Value, Is.EqualTo("Simulated database error"));
             });
         }
-
     }
 }

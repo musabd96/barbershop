@@ -1,6 +1,7 @@
 ﻿using API.Controllers.AppointmentController;
 using Application.Commands.Appointments.DeleteAppointment;
 using Application.Dtos;
+using Application.Validators.Appointmnet;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -12,13 +13,15 @@ namespace Test.Appointment.Commands.DeleteAppointment
     public class DeleteAppoinmentControllerTests
     {
         private IMediator _mediator;
+        private AppointmentValidator _validator;
         private AppointmentController _controller;
 
         [SetUp]
         public void Setup()
         {
             _mediator = Mock.Of<IMediator>();
-            _controller = new AppointmentController(_mediator);
+            _validator = Mock.Of<AppointmentValidator>(); // Mock the validator
+            _controller = new AppointmentController(_mediator, _validator);
         }
 
         [TearDown]
