@@ -54,30 +54,5 @@ namespace Test.Appointment.Commands.Appointment
             // Assert
             NUnit.Framework.Assert.That(result.Id, Is.EqualTo(newAppointment.Id));
         }
-
-        //[Test]
-        //public async Task Handle_inValidAppointment_ShouldReturnInternalServerErrorOnException()
-        //{
-        //    // Arrange
-        //    var appointment = new List<Domain.Models.Appointments.Appointment>();
-        //    SetupMockDbContext(appointment);
-
-        //    var newAppointment = new AppointmentDto
-        //    {
-        //        CustomerId = Guid.Empty,
-        //        BarberId = Guid.Empty,
-        //        AppointmentDate = DateTime.Now,
-        //        Service = "",
-        //        Price = -1,
-        //    };
-
-
-        //    var addAppointmentCommand = new AddNewAppointmentCommand(newAppointment);
-
-        //    // Act
-        //    var result = await _handler!.Handle(addAppointmentCommand, CancellationToken.None);
-
-        //    // Assert
-        //}
     }
 }

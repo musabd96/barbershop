@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Database;
+using Infrastructure.Repositories.Barbers;
 
 namespace Infrastructure
 {
@@ -11,6 +12,7 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IAppointmentRepositories, AppointmentRepositories>();
+            services.AddScoped<IBarberRepositories, BarberRepositories>();
 
             services.AddDbContext<AppDbContext>(options =>
             {

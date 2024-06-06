@@ -1,6 +1,7 @@
 ﻿
 
 using Domain.Models.Appointments;
+using Domain.Models.Barbers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database
@@ -19,6 +20,17 @@ namespace Infrastructure.Database
                     Service = "Cutting",
                     Price = 20.00m,
                     IsCancelled = false,
+                }
+            );
+        }
+
+        public static void SeedBarbers(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Barber>().HasData(
+                new Barber
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Mustafa"
                 }
             );
         }
