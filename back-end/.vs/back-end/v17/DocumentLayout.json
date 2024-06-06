@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\test\\appointment\\commands\\appointment\\addnewappoinmentcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38026B38-2AB8-4740-B041-092149137E8F}|Test\\Test.csproj|solutionrelative:test\\appointment\\commands\\appointment\\addnewappoinmentcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|solutionrelative:application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{07FAEE70-D884-479A-848F-EFA49A7AA5C9}|API\\API.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\api\\controllers\\appointmentcontroller\\appointmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{07FAEE70-D884-479A-848F-EFA49A7AA5C9}|API\\API.csproj|solutionrelative:api\\controllers\\appointmentcontroller\\appointmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\application\\commands\\appointments\\addnewappoinment\\addnewappointmentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|solutionrelative:application\\commands\\appointments\\addnewappoinment\\addnewappointmentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\application\\validators\\appointmnet\\appointmentvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A29E5EFF-42E1-4C6C-B8B3-8E8BEE676A2C}|Application\\Application.csproj|solutionrelative:application\\validators\\appointmnet\\appointmentvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7780AAE3-5C35-47D7-A8D2-933BA060AC67}|Domain\\Domain.csproj|c:\\users\\mustafa\\source\\repos\\barbershop\\back-end\\domain\\models\\appointments\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7780AAE3-5C35-47D7-A8D2-933BA060AC67}|Domain\\Domain.csproj|solutionrelative:domain\\models\\appointments\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,19 +26,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AddNewAppointmentCommandHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Commands\\Appointments\\AddNewAppoinment\\AddNewAppointmentCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Commands\\Appointments\\AddNewAppoinment\\AddNewAppointmentCommandHandler.cs",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Commands\\Appointments\\AddNewAppoinment\\AddNewAppointmentCommandHandler.cs",
-              "RelativeToolTip": "Application\\Commands\\Appointments\\AddNewAppoinment\\AddNewAppointmentCommandHandler.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAIAAAA",
+              "DocumentIndex": 0,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "Application\\DependencyInjection.cs",
+              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\DependencyInjection.cs",
+              "RelativeToolTip": "Application\\DependencyInjection.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-03T17:32:56.456Z",
+              "WhenOpened": "2024-06-06T12:34:34.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Appointment.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Domain\\Models\\Appointments\\Appointment.cs",
+              "RelativeDocumentMoniker": "Domain\\Models\\Appointments\\Appointment.cs",
+              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Domain\\Models\\Appointments\\Appointment.cs",
+              "RelativeToolTip": "Domain\\Models\\Appointments\\Appointment.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-06T12:27:54.199Z",
               "EditorCaption": ""
             },
             {
@@ -45,26 +62,22 @@
               "RelativeDocumentMoniker": "API\\Controllers\\AppointmentController\\AppointmentController.cs",
               "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\API\\Controllers\\AppointmentController\\AppointmentController.cs",
               "RelativeToolTip": "API\\Controllers\\AppointmentController\\AppointmentController.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAAowEEAAAAIAAAA",
+              "ViewState": "AQIAAHIAAAAAAAAAAAAIwEsAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-03T17:29:13.877Z",
+              "WhenOpened": "2024-06-06T12:27:26.271Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AddNewAppoinmentControllerTests.cs",
-              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Commands\\Appointment\\AddNewAppoinmentControllerTests.cs",
-              "RelativeDocumentMoniker": "Test\\Appointment\\Commands\\Appointment\\AddNewAppoinmentControllerTests.cs",
-              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Test\\Appointment\\Commands\\Appointment\\AddNewAppoinmentControllerTests.cs*",
-              "RelativeToolTip": "Test\\Appointment\\Commands\\Appointment\\AddNewAppoinmentControllerTests.cs*",
-              "ViewState": "AQIAACYAAAAAAAAAAADwv00AAAAeAAAA",
+              "DocumentIndex": 2,
+              "Title": "AppointmentValidator.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Validators\\Appointmnet\\AppointmentValidator.cs",
+              "RelativeDocumentMoniker": "Application\\Validators\\Appointmnet\\AppointmentValidator.cs",
+              "ToolTip": "C:\\Users\\Mustafa\\source\\repos\\barbershop\\back-end\\Application\\Validators\\Appointmnet\\AppointmentValidator.cs",
+              "RelativeToolTip": "Application\\Validators\\Appointmnet\\AppointmentValidator.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-03T17:28:46.686Z",
+              "WhenOpened": "2024-06-06T12:26:02.231Z",
               "EditorCaption": ""
             }
           ]
