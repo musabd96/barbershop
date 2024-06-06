@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240606125105_Seed")]
-    partial class Seed
+    [Migration("20240606170542_SeedBarber")]
+    partial class SeedBarber
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,13 +57,35 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("691cbf7e-9cdc-49a4-a1e6-ebc6d1544092"),
+                            Id = new Guid("18a2b16e-f00b-4a6a-8cb8-56161f9a813d"),
                             AppointmentDate = new DateTime(2024, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            BarberId = new Guid("bac198d9-2453-4178-8f5b-7ea6dabde951"),
-                            CustomerId = new Guid("f6be4dcd-fa9b-45c2-bfd2-aad40c1f6d4e"),
+                            BarberId = new Guid("20335de6-0f38-4921-a921-685b3f546231"),
+                            CustomerId = new Guid("f46a1e42-6cf3-4572-866b-53c3432e7069"),
                             IsCancelled = false,
                             Price = 20.00m,
                             Service = "Cutting"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Models.Barbers.Barber", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Barber");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4c2beb68-83a6-4415-9ec4-79d2c7afb9aa"),
+                            Name = "Mustafa"
                         });
                 });
 #pragma warning restore 612, 618

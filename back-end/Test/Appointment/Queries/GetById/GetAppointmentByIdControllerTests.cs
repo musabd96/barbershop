@@ -1,15 +1,10 @@
-﻿using API.Controllers;
-using API.Controllers.AppointmentController;
+﻿using API.Controllers.AppointmentController;
 using Application.Queries.Appointments.GetAppointmentById;
 using Application.Validators.Appointmnet;
-using Domain.Models.Appointments;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Test.Appointment.Queries.GetById
 {
