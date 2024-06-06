@@ -1,26 +1,25 @@
-﻿using API.Controllers.AppointmentController;
-using Application.Commands.Appointments.AddNewAppoinment;
+﻿using NUnit.Framework;
+using API.Controllers.AppointmentController;
 using Application.Dtos;
+using Application.Validators.Appointmnet;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using NUnit.Framework;
 
-namespace Test.Appointment.Commands.Appointment
+namespace YourProject.Tests.Controllers
 {
     [TestFixture]
-    public class AddNewAppoinmentControllerTests
+    public class AppointmentControllerTests
     {
-        private IMediator _mediator;
         private AppointmentController _controller;
+        private AppointmentValidator _validator;
 
         [SetUp]
         public void Setup()
         {
-            _mediator = Mock.Of<IMediator>();
-            _controller = new AppointmentController(_mediator);
+            _validator = new AppointmentValidator(); // Use real validator instance
+            _controller = new AppointmentController(Mock.Of<IMediator>(), _validator);
         }
-
 
         [TearDown]
         public void TearDown()
@@ -35,18 +34,19 @@ namespace Test.Appointment.Commands.Appointment
         public async Task AddNewAppoinment_ValidInput_ReturnsOkResult()
         {
             // Arrange
-            var newAppointment = new AppointmentDto
+            var appointmentDto = new AppointmentDto
             {
                 Id = Guid.NewGuid(),
+                BarberId = Guid.NewGuid(),
+                CustomerId = Guid.NewGuid(),
+                Service = "Hair cut",
+                AppointmentDate = new DateTime(2030, 01, 01),
+                Price = 299.99m,
+                IsCancelled = false,
             };
 
-
-            Mock.Get(_mediator)
-                .Setup(x => x.Send(It.IsAny<AddNewAppointmentCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Domain.Models.Appointments.Appointment());
-
             // Act
-            var result = await _controller.AddNewAppointment(newAppointment);
+            var result = await _controller.AddNewAppointment(appointmentDto);
 
             // Assert
             NUnit.Framework.Assert.That(result, Is.InstanceOf<OkObjectResult>());
@@ -57,20 +57,18 @@ namespace Test.Appointment.Commands.Appointment
         public async Task AddNewAppointment_InvalidInput_ReturnsBadRequest()
         {
             // Arrange
-            var invalidAppointment = new AppointmentDto
+            var appointmentDto = new AppointmentDto
             {
-                // Example of invalid input for demonstration
-                // Omitting required fields or setting invalid values
+                // Example of an invalid appointmentDto
             };
 
-            _controller.ModelState.AddModelError("PropertyName", "ErrorMessage"); // Add model state error as needed
-
             // Act
-            var result = await _controller.AddNewAppointment(invalidAppointment);
+            var result = await _controller.AddNewAppointment(appointmentDto);
 
             // Assert
             NUnit.Framework.Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
             NUnit.Framework.Assert.That((result as BadRequestObjectResult)?.StatusCode, Is.EqualTo(400));
         }
+
     }
 }

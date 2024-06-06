@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Application.Commands.Appointments.AddNewAppoinment;
 using Application.Commands.Appointments.UpdateAppointment;
 using Application.Commands.Appointments.DeleteAppointment;
-using FluentValidation;
 using FluentValidation.Results;
 using Application.Validators.Appointmnet;
 
@@ -72,18 +71,17 @@ namespace API.Controllers.AppointmentController
             }
         }
 
-        // Create new appointment
         [HttpPost]
         [Route("addNewAppointment")]
         public async Task<IActionResult> AddNewAppointment([FromBody] AppointmentDto appointmentDto)
         {
             try
             {
-                var validat = _validator.Validate(appointmentDto);
+                var validationResult = _validator.Validate(appointmentDto);
 
-                if (!validat.IsValid)
+                if (!validationResult.IsValid)
                 {
-                    foreach (var error in validat.Errors)
+                    foreach (var error in validationResult.Errors)
                     {
                         ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
                     }
@@ -122,11 +120,6 @@ namespace API.Controllers.AppointmentController
                 var command = new UpdateAppointmentCommand(appointmentDto, appointmentId);
                 var result = await _mediator.Send(command);
 
-                if (result == null)
-                {
-                    return NotFound();
-                }
-
                 return Ok(result);
             }
             catch (Exception ex)
@@ -134,6 +127,7 @@ namespace API.Controllers.AppointmentController
                 return StatusCode(500, ex.Message);
             }
         }
+
 
         // delete appointment
         [HttpDelete]

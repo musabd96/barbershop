@@ -1,6 +1,6 @@
 ﻿using API.Controllers.AppointmentController;
-using Application.Commands.Appointments.UpdateAppointment;
 using Application.Dtos;
+using Application.Validators.Appointmnet;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -9,18 +9,17 @@ using NUnit.Framework;
 namespace Test.Appointment.Commands.UpdateAppointment
 {
     [TestFixture]
-    public class UpdateAppoinmentControllerTests
+    public class UpdateAppointmentControllerTests
     {
-        private IMediator _mediator;
         private AppointmentController _controller;
+        private AppointmentValidator _validator;
 
         [SetUp]
         public void Setup()
         {
-            _mediator = Mock.Of<IMediator>();
-            _controller = new AppointmentController(_mediator);
+            _validator = new AppointmentValidator();
+            _controller = new AppointmentController(Mock.Of<IMediator>(), _validator);
         }
-
 
         [TearDown]
         public void TearDown()
@@ -32,12 +31,13 @@ namespace Test.Appointment.Commands.UpdateAppointment
         }
 
         [Test]
-        public async Task UpdateAppoinment_ValidId_ReturnsOkResult()
+        public async Task UpdateAppointment_ValidId_ReturnsOkResult()
         {
             // Arrange
             var appointmentId = Guid.NewGuid();
             var appointmentDto = new AppointmentDto
             {
+                Id = appointmentId,
                 CustomerId = Guid.NewGuid(),
                 BarberId = Guid.NewGuid(),
                 AppointmentDate = DateTime.Now.AddDays(1),
@@ -47,13 +47,8 @@ namespace Test.Appointment.Commands.UpdateAppointment
             };
 
 
-            Mock.Get(_mediator)
-                .Setup(x => x.Send(It.IsAny<UpdateAppointmentCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Domain.Models.Appointments.Appointment());
-
             // Act
             var result = await _controller.UpdateAppointment(appointmentDto, appointmentId);
-
 
             // Assert
             NUnit.Framework.Assert.That(result, Is.InstanceOf<OkObjectResult>());
@@ -61,10 +56,10 @@ namespace Test.Appointment.Commands.UpdateAppointment
         }
 
         [Test]
-        public async Task UpdateAppoinment_inValidId_ReturnsBadRequest()
+        public async Task UpdateAppointment_InvalidId_ReturnsBadRequest()
         {
             // Arrange
-            var appointmentId = Guid.NewGuid();
+            var appointmentId = Guid.Empty;
             var appointmentDto = new AppointmentDto
             {
                 CustomerId = Guid.NewGuid(),
@@ -75,20 +70,12 @@ namespace Test.Appointment.Commands.UpdateAppointment
                 IsCancelled = false
             };
 
-
-            Mock.Get(_mediator)
-                .Setup(x => x.Send(It.IsAny<UpdateAppointmentCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((Domain.Models.Appointments.Appointment)null!);
-
             // Act
             var result = await _controller.UpdateAppointment(appointmentDto, appointmentId);
 
             // Assert
-            NUnit.Framework.Assert.That(result, Is.InstanceOf<NotFoundResult>());
-            var notFoundResult = result as NotFoundResult;
-            NUnit.Framework.Assert.That(notFoundResult?.StatusCode, Is.EqualTo(404));
+            NUnit.Framework.Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
+            NUnit.Framework.Assert.That((result as BadRequestObjectResult)?.StatusCode, Is.EqualTo(400));
         }
-
-
     }
 }

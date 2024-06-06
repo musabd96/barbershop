@@ -7,6 +7,9 @@ namespace Application.Validators.Appointmnet
     {
         public AppointmentValidator()
         {
+            RuleFor(appointment => appointment.Id)
+                .NotEmpty().WithMessage("appointment Id is required.");
+
             RuleFor(appointment => appointment.CustomerId)
                 .NotEmpty().WithMessage("Customer Id is required.");
 
