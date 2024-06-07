@@ -1,43 +1,43 @@
-﻿using Application.Commands.Barbers.AddNewBarber;
-using Application.Commands.Barbers.DeleteBarber;
-using Application.Commands.Barbers.UpdateBarber;
+﻿using Application.Commands.Customers.AddCustomer;
+using Application.Commands.Customers.DeleteCustomer;
+using Application.Commands.Customers.UpdateCustomer;
 using Application.Dtos;
-using Application.Queries.Barbers.GetAllBarbers;
-using Application.Queries.Barbers.GetBarberById;
-using Application.Validators.Barber;
-using Domain.Models.Barbers;
+using Application.Queries.Customers.GetAllCustomers;
+using Application.Queries.Customers.GetCustomerById;
+using Application.Validators.Customer;
+using Domain.Models.Customers;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.BarberController
+namespace API.Controllers.CustomerController
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BarberController : Controller
+    public class CustomerController : Controller
     {
         internal readonly IMediator _mediator;
-        internal readonly BarberValidator _validator;
+        internal readonly CustomerValidator _validator;
 
-        public BarberController(IMediator mediator, BarberValidator validator)
+        public CustomerController(IMediator mediator, CustomerValidator validator)
         {
             _mediator = mediator;
             _validator = validator;
         }
 
-        //Get all barbers
+        //Get all customers
         [HttpGet]
-        [Route("getAllBarbers")]
-        public async Task<IActionResult> GetAllBarbers()
+        [Route("getAllCustomers")]
+        public async Task<IActionResult> GetAllCustomers()
         {
             try
             {
-                var query = new GetAllBarbersQuery();
+                var query = new GetAllCustomersQuery();
                 var result = await _mediator.Send(query);
 
-                if (result is List<Barber> barbers && barbers.Count > 0)
+                if (result is List<Customer> customers && customers.Count > 0)
                 {
-                    return Ok(barbers);
+                    return Ok(customers);
                 }
                 else
                 {
@@ -50,20 +50,20 @@ namespace API.Controllers.BarberController
             }
         }
 
-        //Get a barber by id
+        //Get a customer by id
         [HttpGet]
-        [Route("getBarberById/{barberId}")]
-        public async Task<IActionResult> GetBarberById(Guid barberId)
+        [Route("getCustomerById/{customerId}")]
+        public async Task<IActionResult> GetCustomerById(Guid customerId)
         {
             try
             {
-                Barber barber = await _mediator.Send(new GetBarberByIdQuery(barberId));
-                if (barber == null)
+                Customer customer = await _mediator.Send(new GetCustomerByIdQuery(customerId));
+                if (customer == null)
                 {
-                    ModelState.AddModelError("BarberNotFound", $"This appointment Id {barberId} is not found");
+                    ModelState.AddModelError("CustomerNotFound", $"This appointment Id {customerId} is not found");
                     return BadRequest(ModelState);
                 }
-                return Ok(barber);
+                return Ok(customer);
             }
             catch (Exception ex)
             {
@@ -71,14 +71,14 @@ namespace API.Controllers.BarberController
             }
         }
 
-        //Add a new barber
+        //Add a new customer
         [HttpPost]
-        [Route("addNewBarber")]
-        public async Task<IActionResult> AddNewBarber([FromBody] BarberDto barberDto)
+        [Route("addNewCustomer")]
+        public async Task<IActionResult> AddNewCustomer([FromBody] CustomerDto customerDto)
         {
             try
             {
-                var validationResult = _validator.Validate(barberDto);
+                var validationResult = _validator.Validate(customerDto);
 
                 if (!validationResult.IsValid)
                 {
@@ -89,7 +89,7 @@ namespace API.Controllers.BarberController
                     return BadRequest(ModelState);
                 }
 
-                var command = new AddNewBarberCommand(barberDto);
+                var command = new AddNewCustomerCommand(customerDto);
                 var result = await _mediator.Send(command);
 
                 return Ok(result);
@@ -100,14 +100,14 @@ namespace API.Controllers.BarberController
             }
         }
 
-        //Update barber
+        //Update customer
         [HttpPost]
-        [Route("updateBarber/{barberId}")]
-        public async Task<IActionResult> UpdateBarber([FromBody] BarberDto barberDto, Guid barberId)
+        [Route("updateCustomer/{customerId}")]
+        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerDto customerDto, Guid customerId)
         {
             try
             {
-                ValidationResult validationResult = await _validator.ValidateAsync(barberDto);
+                ValidationResult validationResult = await _validator.ValidateAsync(customerDto);
 
                 if (!validationResult.IsValid)
                 {
@@ -118,7 +118,7 @@ namespace API.Controllers.BarberController
                     return BadRequest(ModelState);
                 }
 
-                var command = new UpdateBarberCommand(barberDto, barberId);
+                var command = new UpdateCustomerCommand(customerDto, customerId);
                 var result = await _mediator.Send(command);
 
                 return Ok(result);
@@ -129,20 +129,20 @@ namespace API.Controllers.BarberController
             }
         }
 
-        // delete barber
+        // delete customer
         [HttpDelete]
-        [Route("deleteBarber/{barberId}")]
-        public async Task<IActionResult> DeleteBarber(Guid barberId)
+        [Route("deleteCustomer/{customerId}")]
+        public async Task<IActionResult> DeleteCustomer(Guid customerId)
         {
             try
             {
-                Barber barber = await _mediator.Send(new DeleteBarberCommand(barberId));
-                if (barber == null)
+                Customer customer = await _mediator.Send(new DeleteCustomerCommand(customerId));
+                if (customer == null)
                 {
-                    ModelState.AddModelError("BarberNotFound", $"This barber Id {barberId} is not found");
+                    ModelState.AddModelError("CustomerNotFound", $"This customer Id {customerId} is not found");
                     return BadRequest(ModelState);
                 }
-                return Ok(barber);
+                return Ok(customer);
             }
             catch (Exception ex)
             {

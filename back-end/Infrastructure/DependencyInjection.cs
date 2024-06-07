@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Database;
 using Infrastructure.Repositories.Barbers;
+using Infrastructure.Repositories.Customers;
 
 namespace Infrastructure
 {
@@ -13,6 +14,7 @@ namespace Infrastructure
         {
             services.AddScoped<IAppointmentRepositories, AppointmentRepositories>();
             services.AddScoped<IBarberRepositories, BarberRepositories>();
+            services.AddScoped<ICustomerRepositories, CustomerRepositories>();
 
             services.AddDbContext<AppDbContext>(options =>
             {
