@@ -401,3 +401,4 @@ FodyWeavers.xsd
 !Migrations/
 /back-end/.vs/back-end/v17/DocumentLayout.json
 /back-end/.vs/back-end/v17/.suo
+/back-end/Infrastructure/Migrations/20240607144337_SeedCustomer1.cs
