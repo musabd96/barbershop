@@ -2,6 +2,7 @@
 
 using Domain.Models.Appointments;
 using Domain.Models.Barbers;
+using Domain.Models.Customers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database
@@ -31,6 +32,20 @@ namespace Infrastructure.Database
                 {
                     Id = Guid.NewGuid(),
                     Name = "Mustafa"
+                }
+            );
+        }
+
+        public static void SeedCustomers(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>().HasData(
+                new Customer
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Mustafa",
+                    LastName = "Abdulle",
+                    Email = "musse@email.com",
+                    Phone = "0712345678"
                 }
             );
         }

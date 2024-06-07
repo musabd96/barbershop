@@ -1,5 +1,6 @@
 ﻿using Domain.Models.Appointments;
 using Domain.Models.Barbers;
+using Domain.Models.Customers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database
@@ -12,6 +13,7 @@ namespace Infrastructure.Database
 
         public virtual DbSet<Appointment> Appointment { get; set; }
         public virtual DbSet<Barber> Barber { get; set; }
+        public virtual DbSet<Customer> Customer { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +28,7 @@ namespace Infrastructure.Database
 
             DbSeed.SeedAppointments(modelBuilder);
             DbSeed.SeedBarbers(modelBuilder);
+            DbSeed.SeedCustomers(modelBuilder);
         }
     }
 }
