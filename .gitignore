@@ -402,3 +402,4 @@ FodyWeavers.xsd
 /back-end/.vs/back-end/v17/DocumentLayout.json
 /back-end/.vs/back-end/v17/.suo
 /back-end/Infrastructure/Migrations/
+/back-end/API/appsettings.json
