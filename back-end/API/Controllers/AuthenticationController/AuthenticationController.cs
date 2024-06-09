@@ -1,9 +1,10 @@
 ﻿using Application.Commands.Users.Register;
 using Application.Dtos;
+using Application.Dtos.Users;
+using Application.Queries.Users.Login;
 using Application.Validators.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Office.Interop.Excel;
 
 namespace API.Controllers.AuthenticationController
 {
@@ -23,7 +24,6 @@ namespace API.Controllers.AuthenticationController
 
         [HttpPost("register")]
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Errors), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] UserDto userToRegister)
         {
             var inputValidation = _userValidator.Validate(userToRegister);
@@ -40,6 +40,29 @@ namespace API.Controllers.AuthenticationController
             catch (ArgumentException e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Login([FromBody] UserDto userToLogin)
+        {
+            var inputValidation = _userValidator.Validate(userToLogin);
+
+            if (!inputValidation.IsValid)
+            {
+                return BadRequest(inputValidation.Errors.ConvertAll(errors => errors.ErrorMessage));
+            }
+
+            try
+            {
+                string token = await _mediator.Send(new LoginUserQuery(userToLogin));
+
+                return Ok(new TokenDto { TokenValue = token });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

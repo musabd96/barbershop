@@ -37,7 +37,7 @@ namespace Application.Commands.Users.Register
                 PasswordHash = hashedPassword,
             };
 
-            var createdUser = _userRepository.RegisterUser(userToCreate);
+            var createdUser = _userRepository.RegisterUser(userToCreate, cancellationToken);
 
             return createdUser;
         }

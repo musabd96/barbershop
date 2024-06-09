@@ -25,7 +25,7 @@ namespace Infrastructure.Repositories.Users
             }
         }
 
-        public async Task<User> RegisterUser(User userToRegister)
+        public async Task<User> RegisterUser(User userToRegister, CancellationToken cancellationToken)
         {
             try
             {

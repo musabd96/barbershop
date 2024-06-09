@@ -1,5 +1,4 @@
-﻿
-using Domain.Models.Users;
+﻿using Domain.Models.Users;
 using FluentValidation;
 using Infrastructure.Repositories.Users;
 

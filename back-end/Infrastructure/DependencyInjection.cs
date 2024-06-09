@@ -6,6 +6,7 @@ using Infrastructure.Database;
 using Infrastructure.Repositories.Barbers;
 using Infrastructure.Repositories.Customers;
 using Infrastructure.Repositories.Users;
+using Infrastructure.Repositories.Authorization;
 
 namespace Infrastructure
 {
@@ -17,6 +18,7 @@ namespace Infrastructure
             services.AddScoped<IBarberRepositories, BarberRepositories>();
             services.AddScoped<ICustomerRepositories, CustomerRepositories>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
 
             services.AddDbContext<AppDbContext>(options =>
             {

@@ -1,10 +1,6 @@
 using Application;
-using Application.Validators.User;
-using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -24,15 +20,6 @@ namespace ReactApp.Server
 
             // Add Swagger/OpenApi support
             builder.Services.AddControllers();
-            builder.Services.AddControllers(options =>
-            {
-
-                var policy = new AuthorizationPolicyBuilder()
-                                 .RequireAuthenticatedUser()
-                                 .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            })
-              .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<UserValidator>());
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(SwaggerUiConfig =>
@@ -65,9 +52,6 @@ namespace ReactApp.Server
                     }
                 });
             });
-
-
-
 
             builder.Services.AddAuthentication(options =>
             {

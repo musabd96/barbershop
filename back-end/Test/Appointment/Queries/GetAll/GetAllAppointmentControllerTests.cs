@@ -68,11 +68,8 @@ namespace Test.Appointment.Queries.GetAll
             var result = await _controller.GetAllAppointments();
 
             // Assert
-            NUnit.Framework.Assert.Multiple(() =>
-            {
-                NUnit.Framework.Assert.That(result, Is.InstanceOf<OkObjectResult>());
-                NUnit.Framework.Assert.That((result as OkObjectResult)?.StatusCode, Is.EqualTo(200));
-            });
+            NUnit.Framework.Assert.That(result, Is.InstanceOf<OkObjectResult>());
+            NUnit.Framework.Assert.That((result as OkObjectResult)?.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
@@ -87,11 +84,8 @@ namespace Test.Appointment.Queries.GetAll
             var result = await _controller.GetAllAppointments();
 
             // Assert
-            NUnit.Framework.Assert.Multiple(() =>
-            {
-                NUnit.Framework.Assert.That(result, Is.InstanceOf<ObjectResult>());
-                NUnit.Framework.Assert.That((result as ObjectResult)?.StatusCode, Is.EqualTo(500));
-            });
+            NUnit.Framework.Assert.That(result, Is.InstanceOf<ObjectResult>());
+            NUnit.Framework.Assert.That((result as ObjectResult)?.StatusCode, Is.EqualTo(500));
         }
     }
 }
