@@ -1,4 +1,5 @@
-﻿using Domain.Models.Users;
+﻿using Domain.Models.Customers;
+using Domain.Models.Users;
 using Infrastructure.Database;
 
 namespace Infrastructure.Repositories.Users
@@ -25,12 +26,22 @@ namespace Infrastructure.Repositories.Users
             }
         }
 
-        public async Task<User> RegisterUser(User userToRegister, CancellationToken cancellationToken)
+        public async Task<User> RegisterUser(User userToRegister, Customer customerToRegister, CancellationToken cancellationToken)
         {
             try
             {
+                _dbContext.Customer.Add(customerToRegister);
                 _dbContext.User.Add(userToRegister);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync(cancellationToken);
+
+                _dbContext.UserCustomers.Add(
+                    new UserRelationships.UserCustomer
+                    {
+                        UserId = userToRegister.Id,
+                        CustomerId = customerToRegister.Id,
+                    });
+                await _dbContext.SaveChangesAsync(cancellationToken);
+
                 return await Task.FromResult(userToRegister);
             }
             catch (ArgumentException e)

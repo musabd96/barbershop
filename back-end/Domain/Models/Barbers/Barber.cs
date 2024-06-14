@@ -1,5 +1,4 @@
 ﻿
-
 namespace Domain.Models.Barbers
 {
     public class Barber
