@@ -20,6 +20,7 @@ namespace Infrastructure.Database
         // Define bridge tables for relationships
         public DbSet<UserRelationships.UserCustomer> UserCustomers { get; set; }
         public DbSet<UserRelationships.UserBarber> UserBarbers { get; set; }
+        public DbSet<AppointmentRelationships.AppointmentCustomer> AppointmentCustomers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,8 +34,8 @@ namespace Infrastructure.Database
 
             // Seed data
             DbSeed.SeedAppointments(modelBuilder);
-            DbSeed.SeedBarbers(modelBuilder);
-            DbSeed.SeedCustomers(modelBuilder);
+            //DbSeed.SeedBarbers(modelBuilder);
+            //DbSeed.SeedCustomers(modelBuilder);
 
             // Define relationships between User and Customer
             modelBuilder.Entity<UserRelationships.UserCustomer>()
@@ -49,6 +50,20 @@ namespace Infrastructure.Database
                 .HasOne(uc => uc.Customer)
                 .WithMany()
                 .HasForeignKey(uc => uc.CustomerId);
+
+            // Define relationships between Appointment and Customer
+            modelBuilder.Entity<AppointmentRelationships.AppointmentCustomer>()
+                .HasKey(ac => new { ac.AppointmentId, ac.CustomerId });
+
+            modelBuilder.Entity<AppointmentRelationships.AppointmentCustomer>()
+                .HasOne(ac => ac.Appointment)
+                .WithMany()
+                .HasForeignKey(ac => ac.AppointmentId);
+
+            modelBuilder.Entity<AppointmentRelationships.AppointmentCustomer>()
+                .HasOne(ac => ac.Customer)
+                .WithMany()
+                .HasForeignKey(ac => ac.CustomerId);
 
             // Define relationships between User and Barber
             modelBuilder.Entity<UserRelationships.UserBarber>()

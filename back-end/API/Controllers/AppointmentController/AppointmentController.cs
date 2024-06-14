@@ -9,6 +9,7 @@ using Application.Commands.Appointments.UpdateAppointment;
 using Application.Commands.Appointments.DeleteAppointment;
 using FluentValidation.Results;
 using Application.Validators.Appointmnet;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers.AppointmentController
 {
@@ -27,12 +28,15 @@ namespace API.Controllers.AppointmentController
 
         //Get all Appointments
         [HttpGet]
-        [Route("getAllAppointments")]
+        [Route("getAllAppointments"), Authorize]
         public async Task<IActionResult> GetAllAppointments()
         {
             try
             {
-                var query = new GetAllAppointmentsQuery();
+                // Get the username of the authenticated user
+                string username = HttpContext.User.Identity!.Name!;
+
+                var query = new GetAllAppointmentsQuery(username);
                 var result = await _mediator.Send(query);
 
                 if (result is List<Appointment> appointments && appointments.Count > 0)
@@ -52,12 +56,15 @@ namespace API.Controllers.AppointmentController
 
         //Get an appointment by id
         [HttpGet]
-        [Route("getAppointmentById/{appointmentId}")]
+        [Route("getAppointmentById/{appointmentId}"), Authorize]
         public async Task<IActionResult> GetAppointmentById(Guid appointmentId)
         {
             try
             {
-                Appointment appointment = await _mediator.Send(new GetAppointmentByIdQuery(appointmentId));
+                // Get the username of the authenticated user
+                string username = HttpContext.User.Identity!.Name!;
+
+                Appointment appointment = await _mediator.Send(new GetAppointmentByIdQuery(appointmentId, username));
                 if (appointment == null)
                 {
                     ModelState.AddModelError("AppointmentNotFound", $"This appointment Id {appointmentId} is not found");
@@ -72,11 +79,14 @@ namespace API.Controllers.AppointmentController
         }
 
         [HttpPost]
-        [Route("addNewAppointment")]
+        [Route("addNewAppointment"), Authorize]
         public async Task<IActionResult> AddNewAppointment([FromBody] AppointmentDto appointmentDto)
         {
             try
             {
+                // Get the username of the authenticated user
+                string username = HttpContext.User.Identity!.Name!;
+
                 var validationResult = _validator.Validate(appointmentDto);
 
                 if (!validationResult.IsValid)
@@ -88,7 +98,7 @@ namespace API.Controllers.AppointmentController
                     return BadRequest(ModelState);
                 }
 
-                var command = new AddNewAppointmentCommand(appointmentDto);
+                var command = new AddNewAppointmentCommand(appointmentDto, username);
                 var result = await _mediator.Send(command);
 
                 return Ok(result); // Return successful result
@@ -101,7 +111,7 @@ namespace API.Controllers.AppointmentController
 
         // update appointment
         [HttpPost]
-        [Route("updateAppointment/{appointmentId}")]
+        [Route("updateAppointment/{appointmentId}"), Authorize]
         public async Task<IActionResult> UpdateAppointment([FromBody] AppointmentDto appointmentDto, Guid appointmentId)
         {
             try
@@ -131,7 +141,7 @@ namespace API.Controllers.AppointmentController
 
         // delete appointment
         [HttpDelete]
-        [Route("deleteAppointment/{appointmentId}")]
+        [Route("deleteAppointment/{appointmentId}"), Authorize]
         public async Task<IActionResult> DeleteAppointment(Guid appointmentId)
         {
             try

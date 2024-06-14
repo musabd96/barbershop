@@ -1,6 +1,4 @@
-﻿
-
-using Domain.Models.Appointments;
+﻿using Domain.Models.Appointments;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,15 +7,19 @@ namespace Infrastructure.Repositories.Appointments
     public class AppointmentRepositories : IAppointmentRepositories
     {
         private readonly AppDbContext _appDbContext;
+
         public AppointmentRepositories(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<Appointment>> GetAllAppointments(CancellationToken cancellationToken)
+        public async Task<List<Appointment>> GetAllAppointments(string userName, CancellationToken cancellationToken)
         {
             try
             {
-                List<Appointment> allAppointments = await _appDbContext.Appointment.ToListAsync(cancellationToken);
+                var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
+                var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
+
+                List<Appointment> allAppointments = await _appDbContext.Appointment.Where(a => a.CustomerId == customer.CustomerId).ToListAsync();
 
                 return allAppointments;
             }
@@ -27,14 +29,25 @@ namespace Infrastructure.Repositories.Appointments
             }
         }
 
-        public async Task<Appointment> GetAppointmentById(Guid id, CancellationToken cancellationToken)
+        public async Task<Appointment> GetAppointmentById(Guid id, string userName, CancellationToken cancellationToken)
         {
             try
             {
-                Appointment? wantedAppointment = await _appDbContext.Appointment
+                var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
+                var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
+
+                var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId);
+
+                if (appointmentCustomer.AppointmentId != null)
+                {
+                    Appointment? wantedAppointment = await _appDbContext.Appointment
                     .FirstOrDefaultAsync(appointment => appointment.Id == id, cancellationToken);
 
-                return wantedAppointment!;
+                    return wantedAppointment!;
+                }
+
+                return null;
+                
             }
             catch (Exception ex)
             {
@@ -43,13 +56,26 @@ namespace Infrastructure.Repositories.Appointments
         }
 
 
-        public Task<Appointment> AddNewAppoinment(Appointment newAppointment, CancellationToken cancellationToken)
+        public async Task<Appointment> AddNewAppoinment(Appointment newAppointment, string userName, CancellationToken cancellationToken)
         {
             try
             {
+                var user =  _appDbContext.User.FirstOrDefault(u => u.Username == userName);
+                var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
+
+                newAppointment.CustomerId = customer!.CustomerId;
                 _appDbContext.Appointment.Add(newAppointment);
-                _appDbContext.SaveChangesAsync(cancellationToken);
-                return Task.FromResult(newAppointment);
+                await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                _appDbContext.AppointmentCustomers.Add(
+                    new AppointmentRelationships.AppointmentCustomer
+                    {
+                        AppointmentId = newAppointment.Id,
+                        CustomerId = customer!.CustomerId,
+                    });
+                await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                return await Task.FromResult(newAppointment);
             }
             catch (Exception ex)
             {

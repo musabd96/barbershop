@@ -1,5 +1,7 @@
 ﻿
 
+using Domain.Models.Appointments;
+
 namespace Domain.Models.Customers
 {
     public class Customer

@@ -1,6 +1,4 @@
-﻿
-
-using Domain.Models.Appointments;
+﻿using Domain.Models.Appointments;
 using Domain.Models.Barbers;
 using Domain.Models.Customers;
 using Microsoft.EntityFrameworkCore;

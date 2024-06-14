@@ -17,8 +17,7 @@ namespace Application.Commands.Appointments.AddNewAppoinment
         {
             Appointment newAppointment = new Appointment()
             {
-                Id = request.NewAppointment.Id,
-                CustomerId = request.NewAppointment.CustomerId,
+                Id = Guid.NewGuid(),
                 BarberId = request.NewAppointment.CustomerId,
                 AppointmentDate = request.NewAppointment.AppointmentDate,
                 Service = request.NewAppointment.Service,
@@ -26,7 +25,7 @@ namespace Application.Commands.Appointments.AddNewAppoinment
                 IsCancelled = request.NewAppointment.IsCancelled,
             };
 
-            await _appointmentRepositories.AddNewAppoinment(newAppointment, cancellationToken);
+            await _appointmentRepositories.AddNewAppoinment(newAppointment, request.UserName, cancellationToken);
 
             return newAppointment;
         }
