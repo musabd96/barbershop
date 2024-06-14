@@ -1,9 +1,11 @@
 ﻿using Application.Commands.Users.Register;
 using Application.Dtos;
+using Domain.Models.Customers;
 using Domain.Models.Users;
 using Infrastructure.Repositories.Users;
 using Moq;
 using NUnit.Framework;
+using static Domain.Models.Users.UserRelationships;
 
 namespace Test.Authentication.Commands
 {
@@ -22,15 +24,23 @@ namespace Test.Authentication.Commands
             _handler = new RegisterUserCommandHandler(_userRepository.Object, _validator);
         }
 
-        protected void SetupMockDbContext(List<User> users)
+        protected void SetupMockDbContext(List<User> users, List<Customer> customers)
         {
             _userRepository.Setup(repo => repo.GetAllUsers())
-                   .ReturnsAsync(users);
+                .ReturnsAsync(users);
 
-            _userRepository.Setup(repo => repo.RegisterUser(It.IsAny<User>(), It.IsAny<CancellationToken>()))
-                .Callback((User user, CancellationToken cancellationToken) => users.Add(user))
-                .Returns((User user, CancellationToken cancellationToken) => Task.FromResult(user));
+            _userRepository.Setup(repo => repo.RegisterUser(It.IsAny<User>(), It.IsAny<Customer>(), It.IsAny<CancellationToken>()))
+                .Callback((User user, Customer customer, CancellationToken cancellationToken) =>
+                {
+                    users.Add(user);
+                    customers.Add(customer);
+                })
+                .Returns((User user, Customer customer, CancellationToken cancellationToken) =>
+                {
+                    return Task.FromResult(user);
+                });
         }
+
 
         [Test]
         public async Task RegisterUser_ValidCommand_Successful()
@@ -41,21 +51,37 @@ namespace Test.Authentication.Commands
                 new User { Id = Guid.NewGuid(), Username = "Test1", PasswordHash = "Test111!!" },
                 new User { Id = Guid.NewGuid(), Username = "Test2", PasswordHash = "Test222!!" }
             };
-            SetupMockDbContext(users);
 
-            var command = new UserDto
+            var customers = new List<Customer>
+            {
+                new Customer { Id = Guid.NewGuid(), FirstName = "test1", LastName = "test1", Email = "test1@test.com",  Phone = "0712345678" },
+                new Customer { Id = Guid.NewGuid(), FirstName = "test2", LastName = "test2", Email = "test2@test.com",  Phone = "0712345678" },
+            };
+
+            SetupMockDbContext(users, customers);
+
+            var user = new UserDto
             {
                 Username = "testuser",
                 Password = "Password123!",
             };
 
-            var registerCommand = new RegisterUserCommand(command);
+            var customer = new CustomerDto
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "test",
+                LastName = "test",
+                Email = "test@test.com",
+                Phone = "0712345678"
+            };
+
+            var registerCommand = new RegisterUserCommand(user, customer);
 
             // Act
             var result = await _handler.Handle(registerCommand, CancellationToken.None);
 
             // Assert
-            NUnit.Framework.Assert.That(result.Username, Is.EqualTo(command.Username));
+            NUnit.Framework.Assert.That(result.Username, Is.EqualTo(user.Username));
         }
         [Test]
         public async Task RegisterUser_InvalidCommand_ThrowsArgumentException()
@@ -66,15 +92,31 @@ namespace Test.Authentication.Commands
                 new User { Id = Guid.NewGuid(), Username = "Test1", PasswordHash = "Test111!!" },
                 new User { Id = Guid.NewGuid(), Username = "Test2", PasswordHash = "Test222!!" }
             };
-            SetupMockDbContext(users);
 
-            var command = new UserDto
+            var customers = new List<Customer>
             {
-                Username = "Test1",
-                Password = "Test111!!"
+                new Customer { Id = Guid.NewGuid(), FirstName = "test1", LastName = "test1", Email = "test1@test.com",  Phone = "0712345678" },
+                new Customer { Id = Guid.NewGuid(), FirstName = "test2", LastName = "test2", Email = "test2@test.com",  Phone = "0712345678" },
             };
 
-            var registerCommand = new RegisterUserCommand(command);
+            SetupMockDbContext(users, customers);
+
+            var user = new UserDto
+            {
+                Username = "Test1", // taken user
+                Password = "Password123!",
+            };
+
+            var customer = new CustomerDto
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "test",
+                LastName = "test",
+                Email = "test@test.com",
+                Phone = "0712345678"
+            };
+
+            var registerCommand = new RegisterUserCommand(user, customer);
 
             // Act and Assert
             var ex = NUnit.Framework.Assert.ThrowsAsync<ArgumentException>(async () =>

@@ -24,9 +24,9 @@ namespace API.Controllers.AuthenticationController
 
         [HttpPost("register")]
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Register([FromBody] UserDto userToRegister)
+        public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
-            var inputValidation = _userValidator.Validate(userToRegister);
+            var inputValidation = _userValidator.Validate(command.NewUser);
 
             if (!inputValidation.IsValid)
             {
@@ -35,13 +35,14 @@ namespace API.Controllers.AuthenticationController
 
             try
             {
-                return Ok(await _mediator.Send(new RegisterUserCommand(userToRegister)));
+                return Ok(await _mediator.Send(command));
             }
             catch (ArgumentException e)
             {
                 return BadRequest(e.Message);
             }
         }
+
 
         [HttpPost("login")]
         [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]

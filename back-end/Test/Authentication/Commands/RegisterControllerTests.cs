@@ -1,4 +1,5 @@
 ﻿using API.Controllers.AuthenticationController;
+using Application.Commands.Users.Register;
 using Application.Dtos;
 using Application.Validators.User;
 using MediatR;
@@ -40,8 +41,19 @@ namespace Test.Authentication.Commands
                 Password = "Test123!"
             };
 
+            var customer = new CustomerDto
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "test",
+                LastName = "test",
+                Email = "test@test.com",
+                Phone = "0712345678"
+            };
+
+            var command = new RegisterUserCommand(user, customer);
+
             // Act
-            var result = await _controller.Register(user);
+            var result = await _controller.Register(command);
 
             // Assert
             NUnit.Framework.Assert.That(result, Is.InstanceOf<OkObjectResult>());
@@ -58,8 +70,19 @@ namespace Test.Authentication.Commands
                 Password = "Test12!" // Invalid password input need 8 characters
             };
 
+            var customer = new CustomerDto
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "test",
+                LastName = "test",
+                Email = "test@test.com",
+                Phone = "0712345678"
+            };
+
+            var command = new RegisterUserCommand(user, customer);
+
             // Act
-            var result = await _controller.Register(user);
+            var result = await _controller.Register(command);
 
             // Assert
             NUnit.Framework.Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());

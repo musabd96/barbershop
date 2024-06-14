@@ -1,4 +1,5 @@
-﻿using Domain.Models.Users;
+﻿using Domain.Models.Customers;
+using Domain.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Infrastructure.Repositories.Users
     public interface IUserRepository
     {
         Task<List<User>> GetAllUsers();
-        Task<User> RegisterUser(User userToRegister, CancellationToken cancellationToken);
+        Task<User> RegisterUser(User userToRegister, Customer customerToRegister, CancellationToken cancellationToken);
     }
 }

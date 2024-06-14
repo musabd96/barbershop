@@ -1,4 +1,5 @@
-﻿using Domain.Models.Users;
+﻿using Domain.Models.Customers;
+using Domain.Models.Users;
 using Infrastructure.Repositories.Users;
 using MediatR;
 
@@ -29,7 +30,6 @@ namespace Application.Commands.Users.Register
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.NewUser.Password);
 
 
-            // Here can we use something called AutoMapper, helps us convert Dtos to Domain Models...
             var userToCreate = new User
             {
                 Id = Guid.NewGuid(),
@@ -37,7 +37,16 @@ namespace Application.Commands.Users.Register
                 PasswordHash = hashedPassword,
             };
 
-            var createdUser = _userRepository.RegisterUser(userToCreate, cancellationToken);
+            var customerToRegister = new Customer
+            {
+                Id = Guid.NewGuid(),
+                FirstName = request.NewCustomer.FirstName,
+                LastName = request.NewCustomer.LastName,
+                Email = request.NewCustomer.Email,
+                Phone = request.NewCustomer.Phone,
+            };
+
+            var createdUser = _userRepository.RegisterUser(userToCreate, customerToRegister, cancellationToken);
 
             return createdUser;
         }
