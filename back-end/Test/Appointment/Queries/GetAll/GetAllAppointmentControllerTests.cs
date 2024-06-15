@@ -2,9 +2,11 @@
 using Application.Queries.Appointments.GetAllAppointments;
 using Application.Validators.Appointmnet;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using System.Security.Claims;
 
 namespace Test.Appointment.Queries.GetAll
 {
@@ -21,6 +23,16 @@ namespace Test.Appointment.Queries.GetAll
             _mediator = Mock.Of<IMediator>();
             _validator = Mock.Of<AppointmentValidator>(); // Mock the validator
             _controller = new AppointmentController(_mediator, _validator);
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+           {
+                new Claim(ClaimTypes.Name, "test")
+           }, "mock"));
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = user }
+            };
         }
 
         [TearDown]
@@ -57,8 +69,8 @@ namespace Test.Appointment.Queries.GetAll
                     IsCancelled = false,
                 }
             };
-
-            var query = new GetAllAppointmentsQuery();
+            var username = "test";
+            var query = new GetAllAppointmentsQuery(username);
 
             Mock.Get(_mediator)
                 .Setup(x => x.Send(It.IsAny<GetAllAppointmentsQuery>(), default))

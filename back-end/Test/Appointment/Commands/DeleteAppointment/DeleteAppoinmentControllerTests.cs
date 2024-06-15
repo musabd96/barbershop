@@ -1,27 +1,46 @@
 ﻿using API.Controllers.AppointmentController;
 using Application.Commands.Appointments.DeleteAppointment;
+using Application.Commands.Appointments.UpdateAppointment;
 using Application.Dtos;
 using Application.Validators.Appointmnet;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using System.Security.Claims;
 
 namespace Test.Appointment.Commands.DeleteAppointment
 {
     [TestFixture]
     public class DeleteAppoinmentControllerTests
     {
-        private IMediator _mediator;
-        private AppointmentValidator _validator;
         private AppointmentController _controller;
+        private AppointmentValidator _validator;
+        private Mock<IMediator> _mediatorMock;
+        private Mock<HttpContext> _httpContextMock;
 
         [SetUp]
         public void Setup()
         {
-            _mediator = Mock.Of<IMediator>();
-            _validator = Mock.Of<AppointmentValidator>(); // Mock the validator
-            _controller = new AppointmentController(_mediator, _validator);
+            _mediatorMock = new Mock<IMediator>();
+            _validator = new AppointmentValidator();
+
+            _httpContextMock = new Mock<HttpContext>();
+            var identity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name, "testuser")
+            });
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            _httpContextMock.Setup(x => x.User).Returns(claimsPrincipal);
+
+            _controller = new AppointmentController(_mediatorMock.Object, _validator)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = _httpContextMock.Object
+                }
+            };
         }
 
         [TearDown]
@@ -48,10 +67,12 @@ namespace Test.Appointment.Commands.DeleteAppointment
                 IsCancelled = false
             };
 
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteAppointmentCommand>(), It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(new Domain.Models.Appointments.Appointment
+                         {
+                             Id = appointmentId
+                         });
 
-            Mock.Get(_mediator)
-                .Setup(x => x.Send(It.IsAny<DeleteAppointmentCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Domain.Models.Appointments.Appointment());
 
             // Act
             var result = await _controller.DeleteAppointment(appointmentId);
@@ -67,9 +88,10 @@ namespace Test.Appointment.Commands.DeleteAppointment
         {
             // Arrange
             var appointmentId = Guid.NewGuid();
-            Mock.Get(_mediator)
-                .Setup(x => x.Send(It.IsAny<DeleteAppointmentCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((Domain.Models.Appointments.Appointment)null!);
+
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteAppointmentCommand>(), It.IsAny<CancellationToken>()))
+                        .ReturnsAsync((Domain.Models.Appointments.Appointment)null!);
+
 
             // Act
             var result = await _controller.DeleteAppointment(appointmentId);

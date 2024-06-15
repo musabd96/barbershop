@@ -64,8 +64,8 @@ namespace ReactApp.Server
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidIssuer = builder.Configuration["AppSettings:Issuer"],
                     ValidAudience = builder.Configuration["AppSettings:Audience"],

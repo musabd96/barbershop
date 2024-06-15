@@ -15,7 +15,7 @@ namespace Application.Commands.Appointments.UpdateAppointment
         public async Task<Appointment> Handle(UpdateAppointmentCommand request, CancellationToken cancellationToken)
         {
             var appointmentToUpdate = await _appointmentRepositories.UpdateAppointment(request.AppointmentId,
-                                                                                       request.AppointmentDto.CustomerId,
+                                                                                       request.Username,
                                                                                        request.AppointmentDto.BarberId,
                                                                                        request.AppointmentDto.AppointmentDate,
                                                                                        request.AppointmentDto.Service,

@@ -1,10 +1,13 @@
 ﻿using NUnit.Framework;
 using API.Controllers.AppointmentController;
 using Application.Dtos;
-using Application.Validators.Appointmnet;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
+using Application.Commands.Appointments.AddNewAppoinment;
+using Application.Validators.Appointmnet;
 
 namespace YourProject.Tests.Controllers
 {
@@ -13,12 +16,30 @@ namespace YourProject.Tests.Controllers
     {
         private AppointmentController _controller;
         private AppointmentValidator _validator;
+        private Mock<IMediator> _mediatorMock;
+        private Mock<HttpContext> _httpContextMock;
 
         [SetUp]
         public void Setup()
         {
+            _mediatorMock = new Mock<IMediator>();
             _validator = new AppointmentValidator(); // Use real validator instance
-            _controller = new AppointmentController(Mock.Of<IMediator>(), _validator);
+
+            _httpContextMock = new Mock<HttpContext>();
+            var identity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name, "testuser")
+            });
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            _httpContextMock.Setup(x => x.User).Returns(claimsPrincipal);
+
+            _controller = new AppointmentController(_mediatorMock.Object, _validator)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = _httpContextMock.Object
+                }
+            };
         }
 
         [TearDown]
@@ -31,7 +52,7 @@ namespace YourProject.Tests.Controllers
         }
 
         [Test]
-        public async Task AddNewAppoinment_ValidInput_ReturnsOkResult()
+        public async Task AddNewAppointment_ValidInput_ReturnsOkResult()
         {
             // Arrange
             var appointmentDto = new AppointmentDto
@@ -44,6 +65,12 @@ namespace YourProject.Tests.Controllers
                 Price = 299.99m,
                 IsCancelled = false,
             };
+
+            _mediatorMock.Setup(m => m.Send(It.IsAny<AddNewAppointmentCommand>(), It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(new Domain.Models.Appointments.Appointment
+                         {
+                             Id = appointmentDto.Id
+                         });
 
             // Act
             var result = await _controller.AddNewAppointment(appointmentDto);
@@ -60,6 +87,10 @@ namespace YourProject.Tests.Controllers
             var appointmentDto = new AppointmentDto
             {
                 // Example of an invalid appointmentDto
+                Id = Guid.Empty, // Assume Id is required
+                Service = "", // Assume Service is required
+                AppointmentDate = DateTime.MinValue, // Assume valid future date is required
+                Price = -1 // Assume price must be a positive value
             };
 
             // Act
@@ -69,6 +100,5 @@ namespace YourProject.Tests.Controllers
             NUnit.Framework.Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
             NUnit.Framework.Assert.That((result as BadRequestObjectResult)?.StatusCode, Is.EqualTo(400));
         }
-
     }
 }

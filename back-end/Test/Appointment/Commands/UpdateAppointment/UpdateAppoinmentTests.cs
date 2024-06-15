@@ -3,6 +3,11 @@ using Application.Dtos;
 using Infrastructure.Repositories.Appointments;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Test.Appointment.Commands.UpdateAppointment
 {
@@ -22,35 +27,34 @@ namespace Test.Appointment.Commands.UpdateAppointment
         private void SetupMockDbContext(List<Domain.Models.Appointments.Appointment> appointments)
         {
             _appointmentRepository.Setup(repo => repo.UpdateAppointment(It.IsAny<Guid>(),
-                                                                        It.IsAny<Guid>(),
+                                                                        It.IsAny<string>(),
                                                                         It.IsAny<Guid>(),
                                                                         It.IsAny<DateTime>(),
                                                                         It.IsAny<string>(),
                                                                         It.IsAny<decimal>(),
                                                                         It.IsAny<bool>(),
-                                                                        It.IsAny<CancellationToken>()))!
+                                                                        It.IsAny<CancellationToken>()))
                                   .ReturnsAsync((Guid appointmentId,
-                                                 Guid customerId,
+                                                 string userName,
                                                  Guid barberId,
                                                  DateTime date,
                                                  string service,
                                                  decimal price,
                                                  bool isCancelled,
                                                  CancellationToken ct) =>
-            {
-                var appointment = appointments.FirstOrDefault(a => a.Id == appointmentId);
-                if (appointment != null)
-                {
-                    appointment.CustomerId = customerId;
-                    appointment.BarberId = barberId;
-                    appointment.AppointmentDate = date;
-                    appointment.Service = service;
-                    appointment.Price = price;
-                    appointment.IsCancelled = isCancelled;
-                    return appointment;
-                }
-                return null;
-            });
+                                  {
+                                      var appointment = appointments.FirstOrDefault(a => a.Id == appointmentId);
+                                      if (appointment != null)
+                                      {
+                                          appointment.BarberId = barberId;
+                                          appointment.AppointmentDate = date;
+                                          appointment.Service = service;
+                                          appointment.Price = price;
+                                          appointment.IsCancelled = isCancelled;
+                                          return appointment;
+                                      }
+                                      return null;
+                                  });
         }
 
         [Test]
@@ -80,8 +84,9 @@ namespace Test.Appointment.Commands.UpdateAppointment
                 Price = 199.99m,
             };
 
-            var command = new UpdateAppointmentCommand(updateDto, appointmentId);
+            var username = "test";
 
+            var command = new UpdateAppointmentCommand(updateDto, appointmentId, username);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -91,7 +96,6 @@ namespace Test.Appointment.Commands.UpdateAppointment
             NUnit.Framework.Assert.That(result.AppointmentDate, Is.EqualTo(updateDto.AppointmentDate));
             NUnit.Framework.Assert.That(result.Service, Is.EqualTo(updateDto.Service));
             NUnit.Framework.Assert.That(result.Price, Is.EqualTo(updateDto.Price));
-
         }
 
         [Test]
@@ -107,18 +111,15 @@ namespace Test.Appointment.Commands.UpdateAppointment
                 Price = 199.99m,
             };
 
-            var command = new UpdateAppointmentCommand(updateDto, appointmentId);
+            var username = "test";
 
+            var command = new UpdateAppointmentCommand(updateDto, appointmentId, username);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             NUnit.Framework.Assert.That(result, Is.Null);
-
         }
-
-
-
     }
 }

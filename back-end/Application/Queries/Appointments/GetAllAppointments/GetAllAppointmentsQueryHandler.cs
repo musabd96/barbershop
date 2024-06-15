@@ -15,7 +15,7 @@ namespace Application.Queries.Appointments.GetAllAppointments
 
         public async Task<List<Appointment>> Handle(GetAllAppointmentsQuery request, CancellationToken cancellationToken)
         {
-            List<Appointment> AllAppointments = await _appointmentRepositories.GetAllAppointments(cancellationToken);
+            List<Appointment> AllAppointments = await _appointmentRepositories.GetAllAppointments(request.UserName, cancellationToken);
             return AllAppointments ?? throw new InvalidOperationException("No appointments were found");
         }
     }

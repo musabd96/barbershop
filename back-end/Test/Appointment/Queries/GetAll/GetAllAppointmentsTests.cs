@@ -11,18 +11,20 @@ namespace Application.Queries.Appointments.GetAllAppointments
         private GetAllAppointmentsQueryHandler _handler;
         private GetAllAppointmentsQuery _request;
         private Mock<IAppointmentRepositories> _appointmentRepositories;
+        private string _testUserName;
 
         [SetUp]
         public void Setup()
         {
             _appointmentRepositories = new Mock<IAppointmentRepositories>();
             _handler = new GetAllAppointmentsQueryHandler(_appointmentRepositories.Object);
-            _request = new GetAllAppointmentsQuery();
+            _testUserName = "testUser";
+            _request = new GetAllAppointmentsQuery(_testUserName);
         }
 
         protected void SetupMockDbContext(List<Appointment> appointments)
         {
-            _appointmentRepositories.Setup(repo => repo.GetAllAppointments(It.IsAny<CancellationToken>()))
+            _appointmentRepositories.Setup(repo => repo.GetAllAppointments(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                                    .ReturnsAsync(appointments);
         }
 

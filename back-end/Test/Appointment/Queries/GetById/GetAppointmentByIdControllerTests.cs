@@ -2,9 +2,11 @@
 using Application.Queries.Appointments.GetAppointmentById;
 using Application.Validators.Appointmnet;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using System.Security.Claims;
 
 namespace Test.Appointment.Queries.GetById
 {
@@ -21,6 +23,16 @@ namespace Test.Appointment.Queries.GetById
             _mediatorMock = new Mock<IMediator>();
             _validatorMock = new Mock<AppointmentValidator>(); // Mock the validator
             _controller = new AppointmentController(_mediatorMock.Object, _validatorMock.Object);
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+           {
+                new Claim(ClaimTypes.Name, "test")
+           }, "mock"));
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = user }
+            };
         }
 
         [TearDown]
@@ -43,8 +55,8 @@ namespace Test.Appointment.Queries.GetById
                 Price = 20.0m,
                 IsCancelled = false
             };
-
-            var query = new GetAppointmentByIdQuery(expectedAppointment.Id);
+            var username = "test";
+            var query = new GetAppointmentByIdQuery(expectedAppointment.Id, username);
 
             _mediatorMock.Setup(x => x.Send(It.Is<GetAppointmentByIdQuery>(q => q.Id == expectedAppointment.Id), It.IsAny<CancellationToken>()))
                          .ReturnsAsync(expectedAppointment);
