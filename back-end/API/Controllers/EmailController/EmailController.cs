@@ -27,7 +27,7 @@ namespace API.Controllers.EmailController
                 // Get the userName of the authenticated user
                 string userName = HttpContext.User.Identity!.Name!;
 
-                var query = new BookingConfirmationEmailCommand(appointmentDto, userName );
+                var query = new BookingConfirmationEmailCommand(appointmentDto, userName);
                 var result = await _mediator.Send(query);
 
                 return Ok();

@@ -6,7 +6,7 @@ namespace Application.Commands.Services.Emails.BookingConfirmation
 {
     public class BookingConfirmationEmailCommand : IRequest<Appointment>
     {
-        public BookingConfirmationEmailCommand(AppointmentDto appointmentDto, string userName) 
+        public BookingConfirmationEmailCommand(AppointmentDto appointmentDto, string userName)
         {
             AppointmentDto = appointmentDto;
             UserName = userName;
