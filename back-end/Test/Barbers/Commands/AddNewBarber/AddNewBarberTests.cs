@@ -1,8 +1,12 @@
 ﻿using Application.Commands.Barbers.AddNewBarber;
 using Application.Dtos;
+using Domain.Models.Barbers;
+using Domain.Models.Customers;
+using Domain.Models.Users;
 using Infrastructure.Repositories.Barbers;
 using Moq;
 using NUnit.Framework;
+using static Domain.Models.Users.UserRelationships;
 
 
 namespace Test.Barber.Commands.AddNewBarber
@@ -20,39 +24,61 @@ namespace Test.Barber.Commands.AddNewBarber
             _handler = new AddNewBarberCommandHandler(_barberRepositories.Object);
         }
 
-        protected void SetupMockDbContext(List<Domain.Models.Barbers.Barber> barbers)
+        protected void SetupMockDbContext(List<User> users, List<Domain.Models.Barbers.Barber> barbers)
         {
-            _barberRepositories.Setup(repo => repo.AddNewBarber(It.IsAny<Domain.Models.Barbers.Barber>(), It.IsAny<CancellationToken>()))
-                .Callback((Domain.Models.Barbers.Barber barber,
-                    CancellationToken cancellationToken) => barbers.Add(barber))
-                .Returns((Domain.Models.Barbers.Barber barber,
-                    CancellationToken cancellationToken) => Task.FromResult(barber));
+            _barberRepositories.Setup(repo => repo.AddNewBarber(It.IsAny<User>(), It.IsAny<Domain.Models.Barbers.Barber>(), It.IsAny<CancellationToken>()))
+                .Callback((User user, Domain.Models.Barbers.Barber barber, CancellationToken cancellationToken) =>
+                {
+                    users.Add(user);
+                    barbers.Add(barber);
+                })
+                .Returns((User user, Domain.Models.Barbers.Barber barber, CancellationToken cancellationToken) =>
+                {
+                    return Task.FromResult(barber);
+                });
         }
 
         [Test]
         public async Task Handle_Validbarber_ReturnsNewbarber()
         {
             // Arrange
-            var barber = new List<Domain.Models.Barbers.Barber>();
-            SetupMockDbContext(barber);
+            var users = new List<User>
+            {
+                new User { Id = Guid.NewGuid(), Username = "Test1", PasswordHash = "Test111!!" },
+                new User { Id = Guid.NewGuid(), Username = "Test2", PasswordHash = "Test222!!" }
+            };
 
-            var newbarber = new BarberDto
+            var barbers = new List<Domain.Models.Barbers.Barber>
+            {
+                new Domain.Models.Barbers.Barber { Id = Guid.NewGuid(), FirstName = "test1", LastName = "test1", Email = "test1@test.com",  Phone = "0712345678" },
+                new Domain.Models.Barbers.Barber { Id = Guid.NewGuid(), FirstName = "test2", LastName = "test2", Email = "test2@test.com",  Phone = "0712345678" },
+            };
+
+            SetupMockDbContext(users, barbers);
+
+            var user = new UserDto
+            {
+                Username = "testuser",
+                Password = "Password123!",
+            };
+
+            var barber = new BarberDto
             {
                 Id = Guid.NewGuid(),
-                FirstName = "Test",
-                LastName = "Test",
-                Email = "Test@email.com",
+                FirstName = "test",
+                LastName = "test",
+                Email = "test@test.com",
                 Phone = "0712345678"
             };
 
 
-            var addbarberCommand = new AddNewBarberCommand(newbarber);
+            var addbarberCommand = new AddNewBarberCommand(user, barber);
 
             // Act
             var result = await _handler!.Handle(addbarberCommand, CancellationToken.None);
 
             // Assert
-            NUnit.Framework.Assert.That(result.Id, Is.EqualTo(newbarber.Id));
+            NUnit.Framework.Assert.That(result.Id, Is.EqualTo(barber.Id));
         }
     }
 }

@@ -1,9 +1,13 @@
 ﻿
 
 using API.Controllers.BarberController;
+using Application.Commands.Barbers.AddNewBarber;
+using Application.Commands.Users.Register;
 using Application.Dtos;
 using Application.Validators.Barber;
 using Domain.Models.Barbers;
+using Domain.Models.Customers;
+using Domain.Models.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -37,6 +41,12 @@ namespace Test.Barber.Commands.AddNewBarber
         public async Task AddNewBarber_ValidInput_ReturnsOkResult()
         {
             // Arrange
+            var user = new UserDto
+            {
+                Username = "test",
+                Password = "Test123!"
+            };
+
             var barberDto = new BarberDto
             {
                 Id = Guid.NewGuid(),
@@ -44,11 +54,12 @@ namespace Test.Barber.Commands.AddNewBarber
                 LastName = "Test",
                 Email = "Test@email.com",
                 Phone = "0712345678"
-
             };
 
+            var command = new AddNewBarberCommand(user, barberDto);
+
             // Act
-            var result = await _controller.AddNewBarber(barberDto);
+            var result = await _controller.AddNewBarber(command);
 
             // Assert
             NUnit.Framework.Assert.That(result, Is.InstanceOf<OkObjectResult>());
@@ -59,13 +70,21 @@ namespace Test.Barber.Commands.AddNewBarber
         public async Task AddNewBarber_ValidInput_ReturnsBadRequest()
         {
             // Arrange
+            var user = new UserDto
+            {
+                Username = "test",
+                Password = "Test123!"
+            };
+
             var barberDto = new BarberDto
             {
 
             };
 
+            var command = new AddNewBarberCommand(user, barberDto);
+
             // Act
-            var result = await _controller.AddNewBarber(barberDto);
+            var result = await _controller.AddNewBarber(command);
 
             // Assert
             NUnit.Framework.Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
