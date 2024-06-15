@@ -1,5 +1,6 @@
 ﻿using Domain.Models.Appointments;
 using Infrastructure.Database;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Appointments
@@ -7,11 +8,14 @@ namespace Infrastructure.Repositories.Appointments
     public class AppointmentRepositories : IAppointmentRepositories
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IEmailService _emailService;
 
-        public AppointmentRepositories(AppDbContext appDbContext)
+        public AppointmentRepositories(AppDbContext appDbContext, IEmailService emailService)
         {
             _appDbContext = appDbContext;
+            _emailService = emailService;
         }
+
         public async Task<List<Appointment>> GetAllAppointments(string userName, CancellationToken cancellationToken)
         {
             try
@@ -74,6 +78,9 @@ namespace Infrastructure.Repositories.Appointments
                         CustomerId = customer!.CustomerId,
                     });
                 await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                // Send booking confirmation email delete this when front end finished
+                await _emailService.SendBookingConfirmed(user!.Username, newAppointment, cancellationToken);
 
                 return await Task.FromResult(newAppointment);
             }
