@@ -6,11 +6,13 @@ namespace Application.Commands.Barbers.AddNewBarber
 {
     public class AddNewBarberCommand : IRequest<Barber>
     {
-        public AddNewBarberCommand(BarberDto newBarber)
+        public AddNewBarberCommand(UserDto newUser, BarberDto newBarber)
         {
+            NewUser = newUser;
             NewBarber = newBarber;
         }
 
-        public BarberDto NewBarber { get; }
+        public UserDto NewUser { get; set; }
+        public BarberDto NewBarber { get; set; }
     }
 }

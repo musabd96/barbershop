@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Barbers;
+using Domain.Models.Users;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,13 +41,23 @@ namespace Infrastructure.Repositories.Barbers
             }
         }
 
-        public async Task<Barber> AddNewBarber(Barber newBarber, CancellationToken cancellationToken)
+        public async Task<Barber> AddNewBarber(User userToCreate, Barber newBarber, CancellationToken cancellationToken)
         {
             try
             {
                 _appDbContext.Barber.Add(newBarber);
+                _appDbContext.User.Add(userToCreate);
                 await _appDbContext.SaveChangesAsync(cancellationToken);
-                return newBarber;
+
+                _appDbContext.UserBarbers.Add(
+                    new UserRelationships.UserBarber
+                    {
+                        UserId = userToCreate.Id,
+                        BarberId = newBarber.Id
+                    });
+                await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                return await Task.FromResult(newBarber);
             }
             catch (Exception ex)
             {

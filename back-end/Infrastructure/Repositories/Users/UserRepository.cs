@@ -6,18 +6,18 @@ namespace Infrastructure.Repositories.Users
 {
     public class UserRepository : IUserRepository
     {
-        private readonly AppDbContext _dbContext;
+        private readonly AppDbContext _appDbContext;
 
         public UserRepository(AppDbContext dbContext)
         {
-            _dbContext = dbContext;
+            _appDbContext = dbContext;
         }
 
         public async Task<List<User>> GetAllUsers()
         {
             try
             {
-                List<User> allUsersFromDatabase = _dbContext.User.ToList();
+                List<User> allUsersFromDatabase = _appDbContext.User.ToList();
                 return await Task.FromResult(allUsersFromDatabase);
             }
             catch (ArgumentException e)
@@ -30,17 +30,17 @@ namespace Infrastructure.Repositories.Users
         {
             try
             {
-                _dbContext.Customer.Add(customerToRegister);
-                _dbContext.User.Add(userToRegister);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                _appDbContext.Customer.Add(customerToRegister);
+                _appDbContext.User.Add(userToRegister);
+                await _appDbContext.SaveChangesAsync(cancellationToken);
 
-                _dbContext.UserCustomers.Add(
+                _appDbContext.UserCustomers.Add(
                     new UserRelationships.UserCustomer
                     {
                         UserId = userToRegister.Id,
                         CustomerId = customerToRegister.Id,
                     });
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                await _appDbContext.SaveChangesAsync(cancellationToken);
 
                 return await Task.FromResult(userToRegister);
             }

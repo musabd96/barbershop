@@ -8,6 +8,7 @@ using Application.Validators.Barber;
 using Domain.Models.Barbers;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.BarberController
@@ -73,12 +74,12 @@ namespace API.Controllers.BarberController
 
         //Add a new barber
         [HttpPost]
-        [Route("addNewBarber")]
-        public async Task<IActionResult> AddNewBarber([FromBody] BarberDto barberDto)
+        [Route("addNewBarber"), Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AddNewBarber([FromBody] AddNewBarberCommand command)
         {
             try
             {
-                var validationResult = _validator.Validate(barberDto);
+                var validationResult = _validator.Validate(command.NewBarber);
 
                 if (!validationResult.IsValid)
                 {
@@ -89,10 +90,7 @@ namespace API.Controllers.BarberController
                     return BadRequest(ModelState);
                 }
 
-                var command = new AddNewBarberCommand(barberDto);
-                var result = await _mediator.Send(command);
-
-                return Ok(result);
+                return Ok(await _mediator.Send(command));
             }
             catch (Exception ex)
             {
