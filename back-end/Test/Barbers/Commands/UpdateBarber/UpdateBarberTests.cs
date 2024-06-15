@@ -21,11 +21,11 @@ namespace Test.Barber.Commands.UpdateBarber
 
         private void SetupMockDbContext(List<Domain.Models.Barbers.Barber> barbers)
         {
-            _barberRepository.Setup(repo => repo.UpdateBarber(It.IsAny<Guid>(), 
+            _barberRepository.Setup(repo => repo.UpdateBarber(It.IsAny<Guid>(),
                                                               It.IsAny<string>(),
                                                               It.IsAny<string>(),
-                                                              It.IsAny<string>(), 
-                                                              It.IsAny<string>(), 
+                                                              It.IsAny<string>(),
+                                                              It.IsAny<string>(),
                                                               It.IsAny<CancellationToken>()))!
                                   .ReturnsAsync((Guid barberId, string firstName,
                                                  string lastName, string email,
