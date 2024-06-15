@@ -21,14 +21,25 @@ namespace Test.Barber.Commands.UpdateBarber
 
         private void SetupMockDbContext(List<Domain.Models.Barbers.Barber> barbers)
         {
-            _barberRepository.Setup(repo => repo.UpdateBarber(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))!
-                                  .ReturnsAsync((Guid barberId, string name, CancellationToken ct) =>
+            _barberRepository.Setup(repo => repo.UpdateBarber(It.IsAny<Guid>(), 
+                                                              It.IsAny<string>(),
+                                                              It.IsAny<string>(),
+                                                              It.IsAny<string>(), 
+                                                              It.IsAny<string>(), 
+                                                              It.IsAny<CancellationToken>()))!
+                                  .ReturnsAsync((Guid barberId, string firstName,
+                                                 string lastName, string email,
+                                                 string phone, CancellationToken ct) =>
                                   {
                                       var barber = barbers.FirstOrDefault(a => a.Id == barberId);
                                       if (barber != null)
                                       {
                                           barber.Id = barberId;
-                                          barber.Name = name;
+                                          barber.FirstName = firstName;
+                                          barber.LastName = lastName;
+                                          barber.Email = email;
+                                          barber.Phone = phone;
+
                                           return barber;
                                       }
                                       return null;
@@ -45,7 +56,10 @@ namespace Test.Barber.Commands.UpdateBarber
                 new Domain.Models.Barbers.Barber
                 {
                     Id = barberId,
-                    Name = "Foo",
+                    FirstName = "Test1",
+                    LastName = "Test2",
+                    Email = "Test1@email.com",
+                    Phone = "0712345679"
 
                 }
             };
@@ -53,7 +67,10 @@ namespace Test.Barber.Commands.UpdateBarber
 
             var updateDto = new BarberDto
             {
-                Name = "Bar",
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "Test@email.com",
+                Phone = "0712345678"
             };
 
             var command = new UpdateBarberCommand(updateDto, barberId);
@@ -64,7 +81,7 @@ namespace Test.Barber.Commands.UpdateBarber
 
             // Assert
             NUnit.Framework.Assert.That(result, Is.Not.Null);
-            NUnit.Framework.Assert.That(result.Name, Is.EqualTo(updateDto.Name));
+            NUnit.Framework.Assert.That(result.FirstName, Is.EqualTo(updateDto.FirstName));
 
         }
 
@@ -76,7 +93,10 @@ namespace Test.Barber.Commands.UpdateBarber
 
             var updateDto = new BarberDto
             {
-                Name = "Bar",
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "Test@email.com",
+                Phone = "0712345678"
             };
 
             var command = new UpdateBarberCommand(updateDto, barberId);

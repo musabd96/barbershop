@@ -39,7 +39,10 @@ namespace Test.Barber.Commands.AddNewBarber
             var newbarber = new BarberDto
             {
                 Id = Guid.NewGuid(),
-                Name = "Foo",
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "Test@email.com",
+                Phone = "0712345678"
             };
 
 

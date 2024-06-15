@@ -15,7 +15,9 @@ namespace Application.Commands.Barbers.UpdateBarber
 
         public async Task<Barber> Handle(UpdateBarberCommand request, CancellationToken cancellationToken)
         {
-            var barberToUpdate = await _barberRepositories.UpdateBarber(request.BarberId, request.BarberDto.Name, cancellationToken);
+            var barberToUpdate = await _barberRepositories.UpdateBarber(request.BarberId, request.BarberDto.FirstName,
+                                                                        request.BarberDto.LastName, request.BarberDto.Email,
+                                                                        request.BarberDto.Phone, cancellationToken);
 
             return barberToUpdate;
         }

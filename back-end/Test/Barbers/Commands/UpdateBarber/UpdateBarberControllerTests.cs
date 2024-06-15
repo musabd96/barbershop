@@ -39,7 +39,10 @@ namespace Test.Barber.Commands.UpdateBarber
             var barberDto = new BarberDto
             {
                 Id = barberId,
-                Name = "Test",
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "Test@email.com",
+                Phone = "0712345678"
             };
 
 
@@ -59,7 +62,10 @@ namespace Test.Barber.Commands.UpdateBarber
             var barberDto = new BarberDto
             {
                 Id = barberId,
-                Name = "Test123",
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "Test@email.com",
+                Phone = "0712345678"
             };
 
             // Act

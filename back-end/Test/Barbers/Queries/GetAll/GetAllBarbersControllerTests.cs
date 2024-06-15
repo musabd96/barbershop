@@ -40,11 +40,11 @@ namespace Test.Barber.Queries.GetAll
             {
                 new() {
                     Id = new Guid(),
-                    Name = "Foo",
+                    FirstName = "Foo",
                 },
                 new () {
                     Id = new Guid(),
-                    Name = "Bar",
+                    FirstName = "Bar",
                 }
             };
 

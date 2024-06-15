@@ -41,7 +41,10 @@ namespace Test.Barber.Commands.DeleteBarber
             var barberDto = new BarberDto
             {
                 Id = barberId,
-                Name = "Test",
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "Test@email.com",
+                Phone = "0712345678"
             };
 
 
