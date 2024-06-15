@@ -21,6 +21,7 @@ namespace Infrastructure.Database
         public DbSet<UserRelationships.UserCustomer> UserCustomers { get; set; }
         public DbSet<UserRelationships.UserBarber> UserBarbers { get; set; }
         public DbSet<AppointmentRelationships.AppointmentCustomer> AppointmentCustomers { get; set; }
+        public DbSet<AppointmentRelationships.AppointmentBarber> AppointmentBarbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -64,6 +65,20 @@ namespace Infrastructure.Database
                 .HasOne(ac => ac.Customer)
                 .WithMany()
                 .HasForeignKey(ac => ac.CustomerId);
+
+            // Define relationships between Appointment and barber
+            modelBuilder.Entity<AppointmentRelationships.AppointmentBarber>()
+                .HasKey(ac => new { ac.AppointmentId, ac.BarberId });
+
+            modelBuilder.Entity<AppointmentRelationships.AppointmentBarber>()
+                .HasOne(ac => ac.Appointment)
+                .WithMany()
+                .HasForeignKey(ac => ac.AppointmentId);
+
+            modelBuilder.Entity<AppointmentRelationships.AppointmentBarber>()
+                .HasOne(ac => ac.Barber)
+                .WithMany()
+                .HasForeignKey(ac => ac.BarberId);
 
             // Define relationships between User and Barber
             modelBuilder.Entity<UserRelationships.UserBarber>()

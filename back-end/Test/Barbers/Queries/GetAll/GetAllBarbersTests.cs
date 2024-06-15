@@ -35,12 +35,12 @@ namespace Test.Barbers.Queries.GetAll
                 new Domain.Models.Barbers.Barber
                 {
                     Id = Guid.NewGuid(),
-                    Name = "Foo",
+                    FirstName = "Foo",
                 },
                 new Domain.Models.Barbers.Barber
                 {
                     Id = Guid.NewGuid(),
-                    Name = "Bar",
+                    FirstName = "Bar",
                 },
             };
 

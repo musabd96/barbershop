@@ -36,7 +36,7 @@ namespace Test.Barbers.Queries.GetById
             var expectedBarber = new Domain.Models.Barbers.Barber
             {
                 Id = Guid.NewGuid(),
-                Name = "Foo",
+                FirstName = "Foo",
             };
 
             var query = new GetBarberByIdQuery(expectedBarber.Id);

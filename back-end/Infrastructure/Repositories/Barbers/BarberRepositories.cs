@@ -54,7 +54,7 @@ namespace Infrastructure.Repositories.Barbers
             }
         }
 
-        public async Task<Barber> UpdateBarber(Guid barberId, string Name, CancellationToken cancellationToken)
+        public async Task<Barber> UpdateBarber(Guid barberId, string Name, string lastName, string email, string phone, CancellationToken cancellationToken)
         {
             try
             {
@@ -62,7 +62,10 @@ namespace Infrastructure.Repositories.Barbers
 
                 if (barberToUpdate != null)
                 {
-                    barberToUpdate.Name = Name;
+                    barberToUpdate.FirstName = Name;
+                    barberToUpdate.LastName = lastName;
+                    barberToUpdate.Email = email;
+                    barberToUpdate.Phone = phone;
 
                     _appDbContext.Barber.Update(barberToUpdate);
                     await _appDbContext.SaveChangesAsync(cancellationToken);
@@ -101,5 +104,6 @@ namespace Infrastructure.Repositories.Barbers
                 throw new Exception("An error occurred while deleting the barber to the database", ex);
             }
         }
+
     }
 }

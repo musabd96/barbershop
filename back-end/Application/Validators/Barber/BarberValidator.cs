@@ -10,7 +10,15 @@ namespace Application.Validators.Barber
             RuleFor(barber => barber.Id)
                 .NotEmpty().WithMessage("barber Id is required.");
 
-            RuleFor(barber => barber.Name)
+            RuleFor(barber => barber.FirstName)
+                .NotEmpty().WithMessage("barber's name is required.");
+
+            RuleFor(barber => barber.LastName)
+                .NotEmpty().WithMessage("barber's name is required.");
+
+            RuleFor(barber => barber.Email)
+                .NotEmpty().WithMessage("barber's name is required.");
+            RuleFor(barber => barber.Phone)
                 .NotEmpty().WithMessage("barber's name is required.");
         }
     }

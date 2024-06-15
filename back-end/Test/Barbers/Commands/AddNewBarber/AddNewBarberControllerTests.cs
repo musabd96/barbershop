@@ -3,6 +3,7 @@
 using API.Controllers.BarberController;
 using Application.Dtos;
 using Application.Validators.Barber;
+using Domain.Models.Barbers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -39,7 +40,10 @@ namespace Test.Barber.Commands.AddNewBarber
             var barberDto = new BarberDto
             {
                 Id = Guid.NewGuid(),
-                Name = "Test",
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "Test@email.com",
+                Phone = "0712345678"
 
             };
 

@@ -18,7 +18,10 @@ namespace Application.Commands.Barbers.AddNewBarber
             Barber newBarber = new Barber()
             {
                 Id = request.NewBarber.Id,
-                Name = request.NewBarber.Name,
+                FirstName = request.NewBarber.FirstName,
+                LastName = request.NewBarber.LastName,
+                Email = request.NewBarber.Email,
+                Phone = request.NewBarber.Phone,
             };
 
             await _barberRepositories.AddNewBarber(newBarber, cancellationToken);

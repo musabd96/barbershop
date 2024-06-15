@@ -29,7 +29,7 @@ namespace Infrastructure.Database
                 new Barber
                 {
                     Id = Guid.NewGuid(),
-                    Name = "Mustafa"
+                    FirstName = "Mustafa"
                 }
             );
         }

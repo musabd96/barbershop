@@ -34,7 +34,7 @@ namespace Test.Barbers.Queries.GetById
             var expectedBarber = new Domain.Models.Barbers.Barber
             {
                 Id = barberId,
-                Name = "test"
+                FirstName = "test"
             };
 
             SetupMockDbContext(expectedBarber);
