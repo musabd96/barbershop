@@ -36,9 +36,9 @@ namespace Infrastructure.Repositories.Appointments
                 var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
                 var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
 
-                var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId);
+                var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId && ac.AppointmentId == id);
 
-                if (appointmentCustomer.AppointmentId != null)
+                if (appointmentCustomer != null)
                 {
                     Appointment? wantedAppointment = await _appDbContext.Appointment
                     .FirstOrDefaultAsync(appointment => appointment.Id == id, cancellationToken);
@@ -46,8 +46,8 @@ namespace Infrastructure.Repositories.Appointments
                     return wantedAppointment!;
                 }
 
-                return null;
-                
+                return null!;
+
             }
             catch (Exception ex)
             {
@@ -60,7 +60,7 @@ namespace Infrastructure.Repositories.Appointments
         {
             try
             {
-                var user =  _appDbContext.User.FirstOrDefault(u => u.Username == userName);
+                var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
                 var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
 
                 newAppointment.CustomerId = customer!.CustomerId;
@@ -83,15 +83,20 @@ namespace Infrastructure.Repositories.Appointments
             }
         }
 
-        public async Task<Appointment> UpdateAppointment(Guid appointmentId, Guid CustomerId, Guid barberId, DateTime appointmentDate, string service, decimal price, bool isCancelled, CancellationToken cancellationToken)
+        public async Task<Appointment> UpdateAppointment(Guid appointmentId, string userName, Guid barberId, DateTime appointmentDate, string service, decimal price, bool isCancelled, CancellationToken cancellationToken)
         {
             try
             {
-                Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
+                var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
+                var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
 
-                if (appointmentToUpdate != null)
+                var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId && ac.AppointmentId == appointmentId);
+
+                if (appointmentCustomer != null)
                 {
-                    appointmentToUpdate.BarberId = barberId;
+                    Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
+
+                    appointmentToUpdate!.BarberId = barberId;
                     appointmentToUpdate.AppointmentDate = appointmentDate;
                     appointmentToUpdate.Service = service;
                     appointmentToUpdate.Price = price;
@@ -102,7 +107,6 @@ namespace Infrastructure.Repositories.Appointments
 
                     return appointmentToUpdate;
                 }
-
                 return null!;
             }
             catch (Exception ex)
@@ -111,20 +115,24 @@ namespace Infrastructure.Repositories.Appointments
             }
         }
 
-        public async Task<Appointment> DeleteAppointment(Guid appointmentId, CancellationToken cancellationToken)
+        public async Task<Appointment> DeleteAppointment(Guid appointmentId, string userName, CancellationToken cancellationToken)
         {
             try
             {
-                Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
+                var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
+                var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
 
-                if (appointmentToUpdate != null)
+                var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId && ac.AppointmentId == appointmentId);
+
+                if (appointmentCustomer != null)
                 {
-
+                    Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
 
                     _appDbContext.Appointment.Remove(appointmentToUpdate);
                     await _appDbContext.SaveChangesAsync(cancellationToken);
 
                     return appointmentToUpdate;
+
                 }
 
                 return null!;

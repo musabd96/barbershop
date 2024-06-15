@@ -17,7 +17,7 @@ namespace Application.Commands.Appointments.DeleteAppointment
 
         public async Task<Appointment> Handle(DeleteAppointmentCommand request, CancellationToken cancellationToken)
         {
-            var appointment = await _appointmentRepositories.DeleteAppointment(request.Id, cancellationToken);
+            var appointment = await _appointmentRepositories.DeleteAppointment(request.Id, request.UserName, cancellationToken);
 
             return appointment;
         }

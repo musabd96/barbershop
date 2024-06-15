@@ -20,7 +20,7 @@ namespace Test.Appointment.Queries.GetById
 
         protected void SetupMockDbContext(Domain.Models.Appointments.Appointment appointment)
         {
-            _appointmentRepositories.Setup(repo => repo.GetAppointmentById(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            _appointmentRepositories.Setup(repo => repo.GetAppointmentById(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                                    .ReturnsAsync(appointment);
         }
 
@@ -42,7 +42,8 @@ namespace Test.Appointment.Queries.GetById
 
             SetupMockDbContext(expectedAppointment);
 
-            var query = new GetAppointmentByIdQuery(appointmentId);
+            var username = "test";
+            var query = new GetAppointmentByIdQuery(appointmentId, username);
 
             // Act
             var result = await _handler.Handle(query, CancellationToken.None);
@@ -57,7 +58,8 @@ namespace Test.Appointment.Queries.GetById
             // Arrange
             var appointmentId = Guid.NewGuid();
 
-            var query = new GetAppointmentByIdQuery(appointmentId);
+            var username = "test";
+            var query = new GetAppointmentByIdQuery(appointmentId, username);
 
             // Act
             var result = await _handler.Handle(query, CancellationToken.None);

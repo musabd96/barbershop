@@ -21,11 +21,17 @@ namespace Test.Appointment.Commands.Appointment
 
         protected void SetupMockDbContext(List<Domain.Models.Appointments.Appointment> appointments)
         {
-            _appointmentRepositories.Setup(repo => repo.AddNewAppoinment(It.IsAny<Domain.Models.Appointments.Appointment>(), It.IsAny<CancellationToken>()))
-                .Callback((Domain.Models.Appointments.Appointment appointment,
-                    CancellationToken cancellationToken) => appointments.Add(appointment))
-                .Returns((Domain.Models.Appointments.Appointment appointment,
-                    CancellationToken cancellationToken) => Task.FromResult(appointment));
+            _appointmentRepositories.Setup(repo => repo.AddNewAppoinment(It.IsAny<Domain.Models.Appointments.Appointment>(),
+                                                                         It.IsAny<string>(),
+                                                                         It.IsAny<CancellationToken>()))
+                                                       .Callback((Domain.Models.Appointments.Appointment appointment,
+                                                                  string userName,
+                                                                  CancellationToken cancellationToken) =>
+                                                                  appointments.Add(appointment))
+                                                       .Returns((Domain.Models.Appointments.Appointment appointment,
+                                                                  string userName,
+                                                                  CancellationToken cancellationToken) =>
+                                                       Task.FromResult(appointment));
         }
 
         [Test]
@@ -37,22 +43,21 @@ namespace Test.Appointment.Commands.Appointment
 
             var newAppointment = new AppointmentDto
             {
-                CustomerId = Guid.NewGuid(),
-                BarberId = Guid.NewGuid(),
                 AppointmentDate = DateTime.Now,
                 Service = "Hair cut",
                 Price = 299.99m,
                 IsCancelled = false,
             };
 
+            var username = "test";
 
-            var addAppointmentCommand = new AddNewAppointmentCommand(newAppointment);
+            var addAppointmentCommand = new AddNewAppointmentCommand(newAppointment, username);
 
             // Act
-            var result = await _handler!.Handle(addAppointmentCommand, CancellationToken.None);
+            var result = await _handler.Handle(addAppointmentCommand, CancellationToken.None);
 
             // Assert
-            NUnit.Framework.Assert.That(result.Id, Is.EqualTo(newAppointment.Id));
+            NUnit.Framework.Assert.That(result.Service, Is.EqualTo(newAppointment.Service));
         }
     }
 }

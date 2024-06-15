@@ -5,7 +5,7 @@ namespace Application.Queries.Appointments.GetAllAppointments
 {
     public class GetAllAppointmentsQuery : IRequest<List<Appointment>>
     {
-        public GetAllAppointmentsQuery( string userName) 
+        public GetAllAppointmentsQuery(string userName)
         {
             UserName = userName;
         }

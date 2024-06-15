@@ -8,13 +8,13 @@ namespace Infrastructure.Repositories.Appointments
         Task<Appointment> GetAppointmentById(Guid id, string userName, CancellationToken cancellationToken);
         Task<Appointment> AddNewAppoinment(Appointment newAppointment, string userName, CancellationToken cancellationToken);
         Task<Appointment> UpdateAppointment(Guid appointmentId,
-                                             Guid CustomerId,
+                                             string userName,
                                              Guid BarberId,
                                              DateTime AppointmentDate,
                                              string Service,
                                              decimal Price,
                                              bool IsCancelled
                                             , CancellationToken cancellationToken);
-        Task<Appointment> DeleteAppointment(Guid appointmentId, CancellationToken cancellationToken);
+        Task<Appointment> DeleteAppointment(Guid appointmentId, string userName, CancellationToken cancellationToken);
     }
 }

@@ -1,10 +1,13 @@
 ﻿using API.Controllers.AppointmentController;
+using Application.Commands.Appointments.UpdateAppointment;
 using Application.Dtos;
 using Application.Validators.Appointmnet;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using System.Security.Claims;
 
 namespace Test.Appointment.Commands.UpdateAppointment
 {
@@ -13,12 +16,30 @@ namespace Test.Appointment.Commands.UpdateAppointment
     {
         private AppointmentController _controller;
         private AppointmentValidator _validator;
+        private Mock<IMediator> _mediatorMock;
+        private Mock<HttpContext> _httpContextMock;
 
         [SetUp]
         public void Setup()
         {
+            _mediatorMock = new Mock<IMediator>();
             _validator = new AppointmentValidator();
-            _controller = new AppointmentController(Mock.Of<IMediator>(), _validator);
+
+            _httpContextMock = new Mock<HttpContext>();
+            var identity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name, "testuser")
+            });
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            _httpContextMock.Setup(x => x.User).Returns(claimsPrincipal);
+
+            _controller = new AppointmentController(_mediatorMock.Object, _validator)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = _httpContextMock.Object
+                }
+            };
         }
 
         [TearDown]
@@ -46,6 +67,11 @@ namespace Test.Appointment.Commands.UpdateAppointment
                 IsCancelled = false
             };
 
+            _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateAppointmentCommand>(), default(CancellationToken)))
+                         .ReturnsAsync(new Domain.Models.Appointments.Appointment
+                         {
+                             Id = appointmentId
+                         });
 
             // Act
             var result = await _controller.UpdateAppointment(appointmentDto, appointmentId);

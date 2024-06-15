@@ -33,10 +33,10 @@ namespace API.Controllers.AppointmentController
         {
             try
             {
-                // Get the username of the authenticated user
-                string username = HttpContext.User.Identity!.Name!;
+                // Get the userName of the authenticated user
+                string userName = HttpContext.User.Identity!.Name!;
 
-                var query = new GetAllAppointmentsQuery(username);
+                var query = new GetAllAppointmentsQuery(userName);
                 var result = await _mediator.Send(query);
 
                 if (result is List<Appointment> appointments && appointments.Count > 0)
@@ -61,10 +61,10 @@ namespace API.Controllers.AppointmentController
         {
             try
             {
-                // Get the username of the authenticated user
-                string username = HttpContext.User.Identity!.Name!;
+                // Get the userName of the authenticated user
+                string userName = HttpContext.User.Identity!.Name!;
 
-                Appointment appointment = await _mediator.Send(new GetAppointmentByIdQuery(appointmentId, username));
+                Appointment appointment = await _mediator.Send(new GetAppointmentByIdQuery(appointmentId, userName));
                 if (appointment == null)
                 {
                     ModelState.AddModelError("AppointmentNotFound", $"This appointment Id {appointmentId} is not found");
@@ -84,8 +84,8 @@ namespace API.Controllers.AppointmentController
         {
             try
             {
-                // Get the username of the authenticated user
-                string username = HttpContext.User.Identity!.Name!;
+                // Get the userName of the authenticated user
+                string userName = HttpContext.User.Identity!.Name!;
 
                 var validationResult = _validator.Validate(appointmentDto);
 
@@ -98,7 +98,7 @@ namespace API.Controllers.AppointmentController
                     return BadRequest(ModelState);
                 }
 
-                var command = new AddNewAppointmentCommand(appointmentDto, username);
+                var command = new AddNewAppointmentCommand(appointmentDto, userName);
                 var result = await _mediator.Send(command);
 
                 return Ok(result); // Return successful result
@@ -116,6 +116,9 @@ namespace API.Controllers.AppointmentController
         {
             try
             {
+                // Get the userName of the authenticated user
+                string userName = HttpContext.User.Identity!.Name!;
+
                 ValidationResult validationResult = await _validator.ValidateAsync(appointmentDto);
 
                 if (!validationResult.IsValid)
@@ -127,10 +130,15 @@ namespace API.Controllers.AppointmentController
                     return BadRequest(ModelState);
                 }
 
-                var command = new UpdateAppointmentCommand(appointmentDto, appointmentId);
+                var command = new UpdateAppointmentCommand(appointmentDto, appointmentId, userName);
                 var result = await _mediator.Send(command);
-
+                if (result == null)
+                {
+                    ModelState.AddModelError("AppointmentNotFound", $"This appointment Id {appointmentId} is not found");
+                    return BadRequest(ModelState);
+                }
                 return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -146,7 +154,10 @@ namespace API.Controllers.AppointmentController
         {
             try
             {
-                Appointment appointment = await _mediator.Send(new DeleteAppointmentCommand(appointmentId));
+                // Get the userName of the authenticated user
+                string userName = HttpContext.User.Identity!.Name!;
+
+                Appointment appointment = await _mediator.Send(new DeleteAppointmentCommand(appointmentId, userName));
                 if (appointment == null)
                 {
                     ModelState.AddModelError("AppointmentNotFound", $"This appointment Id {appointmentId} is not found");
