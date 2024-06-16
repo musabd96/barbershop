@@ -35,7 +35,7 @@ namespace Application.Commands.Barbers.AddNewBarber
                 Phone = request.NewBarber.Phone,
             };
 
-            await _barberRepositories.AddNewBarber(userToCreate, newBarber, cancellationToken);
+            await _barberRepositories.AddNewBarber(userToCreate, newBarber, request.BarbershopName, cancellationToken);
 
             return newBarber;
         }

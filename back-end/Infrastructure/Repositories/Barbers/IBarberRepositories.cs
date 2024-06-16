@@ -8,7 +8,7 @@ namespace Infrastructure.Repositories.Barbers
     {
         Task<List<Barber>> GetAllBarbers(CancellationToken cancellationToken);
         Task<Barber> GetBarberById(Guid id, CancellationToken cancellationToken);
-        Task<Barber> AddNewBarber(User userToCreate, Barber newABarber, CancellationToken cancellationToken);
+        Task<Barber> AddNewBarber(User userToCreate, Barber newABarber, string barbershopName, CancellationToken cancellationToken);
         Task<Barber> UpdateBarber(Guid barberId, string Name, string lastName, string email, string phone, CancellationToken cancellationToken);
         Task<Barber> DeleteBarber(Guid barberId, CancellationToken cancellationToken);
     }
