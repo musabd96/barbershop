@@ -52,7 +52,9 @@ namespace Test.Barber.Commands.AddNewBarber
                 Phone = "0712345678"
             };
 
-            var command = new AddNewBarberCommand(user, barberDto);
+            var barberShopName = "BarsherShop";
+
+            var command = new AddNewBarberCommand(user, barberDto, barberShopName);
 
             // Act
             var result = await _controller.AddNewBarber(command);
@@ -77,7 +79,9 @@ namespace Test.Barber.Commands.AddNewBarber
 
             };
 
-            var command = new AddNewBarberCommand(user, barberDto);
+            var barberShopName = "BarsherShop";
+
+            var command = new AddNewBarberCommand(user, barberDto, barberShopName);
 
             // Act
             var result = await _controller.AddNewBarber(command);

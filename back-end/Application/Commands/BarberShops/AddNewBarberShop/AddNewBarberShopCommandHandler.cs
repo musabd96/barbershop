@@ -1,6 +1,4 @@
-﻿using Domain.Models.Barbers;
-using Domain.Models.BarberShops;
-using Domain.Models.Users;
+﻿using Domain.Models.BarberShops;
 using Infrastructure.Repositories.BarberShops;
 using MediatR;
 
@@ -17,6 +15,16 @@ namespace Application.Commands.BarberShops.AddNewBarberShop
 
         public async Task<BarberShop> Handle(AddNewBarberShopCommand request, CancellationToken cancellationToken)
         {
+
+            // Get all existing barber shops
+            List<BarberShop> AllBarberShops = await _barberShopRepositories.GetAllBarberShops(cancellationToken);
+
+            // Check if any existing barber shop already has the same name
+            if (AllBarberShops.Any(bs => bs.Name == request.NewBarberShop.Name))
+            {
+                throw new Exception("Barber shop with the same name already exists.");
+            }
+
             BarberShop newBarberShop = new BarberShop()
             {
                 Id = Guid.NewGuid(),

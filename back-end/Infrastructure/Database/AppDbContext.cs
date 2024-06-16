@@ -24,6 +24,7 @@ namespace Infrastructure.Database
         public DbSet<UserRelationships.UserBarber> UserBarbers { get; set; }
         public DbSet<AppointmentRelationships.AppointmentCustomer> AppointmentCustomers { get; set; }
         public DbSet<AppointmentRelationships.AppointmentBarber> AppointmentBarbers { get; set; }
+        public DbSet<BarberShopRelationships.BarberShopBarber> BarberShopBarbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,7 +39,6 @@ namespace Infrastructure.Database
             // Seed data
             DbSeed.SeedAppointments(modelBuilder);
             DbSeed.SeedBarberShops(modelBuilder);
-            //DbSeed.SeedCustomers(modelBuilder);
 
             // Define relationships between User and Customer
             modelBuilder.Entity<UserRelationships.UserCustomer>()
@@ -92,6 +92,20 @@ namespace Infrastructure.Database
                 .HasForeignKey(ub => ub.UserId);
 
             modelBuilder.Entity<UserRelationships.UserBarber>()
+                .HasOne(ub => ub.Barber)
+                .WithMany()
+                .HasForeignKey(ub => ub.BarberId);
+
+            // Define relationships between BarberShop and Barber
+            modelBuilder.Entity<BarberShopRelationships.BarberShopBarber>()
+                .HasKey(ub => new { ub.BarberShopId, ub.BarberId });
+
+            modelBuilder.Entity<BarberShopRelationships.BarberShopBarber>()
+                .HasOne(ub => ub.BarberShop)
+                .WithMany()
+                .HasForeignKey(ub => ub.BarberShopId);
+
+            modelBuilder.Entity<BarberShopRelationships.BarberShopBarber>()
                 .HasOne(ub => ub.Barber)
                 .WithMany()
                 .HasForeignKey(ub => ub.BarberId);

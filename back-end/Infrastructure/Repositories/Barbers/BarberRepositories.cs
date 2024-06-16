@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Barbers;
+using Domain.Models.BarberShops;
 using Domain.Models.Users;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +42,7 @@ namespace Infrastructure.Repositories.Barbers
             }
         }
 
-        public async Task<Barber> AddNewBarber(User userToCreate, Barber newBarber, CancellationToken cancellationToken)
+        public async Task<Barber> AddNewBarber(User userToCreate, Barber newBarber, string barbershopName, CancellationToken cancellationToken)
         {
             try
             {
@@ -53,6 +54,16 @@ namespace Infrastructure.Repositories.Barbers
                     new UserRelationships.UserBarber
                     {
                         UserId = userToCreate.Id,
+                        BarberId = newBarber.Id
+                    });
+                await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                var barberShopInfo = _appDbContext.BarberShop.FirstOrDefault(bS => bS.Name == barbershopName);
+
+                _appDbContext.BarberShopBarbers.Add(
+                    new BarberShopRelationships.BarberShopBarber
+                    {
+                        BarberShopId = barberShopInfo!.Id,
                         BarberId = newBarber.Id
                     });
                 await _appDbContext.SaveChangesAsync(cancellationToken);
@@ -115,6 +126,5 @@ namespace Infrastructure.Repositories.Barbers
                 throw new Exception("An error occurred while deleting the barber to the database", ex);
             }
         }
-
     }
 }

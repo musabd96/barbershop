@@ -22,6 +22,9 @@ namespace Test.BarberShops.Commands.AddNewBarberShop
 
         protected void SetupMockDbContext(List<BarberShop> barberShops)
         {
+            _barberShopRepositories.Setup(repo => repo.GetAllBarberShops(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(barberShops);
+
             _barberShopRepositories.Setup(repo => repo.AddNewBarberShop(It.IsAny<BarberShop>(), It.IsAny<CancellationToken>()))
                 .Callback((BarberShop barberShop, CancellationToken cancellationToken) => barberShops.Add(barberShop))
                 .Returns((BarberShop barberShop, CancellationToken cancellationToken) => Task.FromResult(barberShop));

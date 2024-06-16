@@ -23,13 +23,13 @@ namespace Test.Barber.Commands.AddNewBarber
 
         protected void SetupMockDbContext(List<User> users, List<Domain.Models.Barbers.Barber> barbers)
         {
-            _barberRepositories.Setup(repo => repo.AddNewBarber(It.IsAny<User>(), It.IsAny<Domain.Models.Barbers.Barber>(), It.IsAny<CancellationToken>()))
-                .Callback((User user, Domain.Models.Barbers.Barber barber, CancellationToken cancellationToken) =>
+            _barberRepositories.Setup(repo => repo.AddNewBarber(It.IsAny<User>(), It.IsAny<Domain.Models.Barbers.Barber>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Callback((User user, Domain.Models.Barbers.Barber barber, string barbershopName, CancellationToken cancellationToken) =>
                 {
                     users.Add(user);
                     barbers.Add(barber);
                 })
-                .Returns((User user, Domain.Models.Barbers.Barber barber, CancellationToken cancellationToken) =>
+                .Returns((User user, Domain.Models.Barbers.Barber barber, string barbershopName, CancellationToken cancellationToken) =>
                 {
                     return Task.FromResult(barber);
                 });
@@ -68,11 +68,12 @@ namespace Test.Barber.Commands.AddNewBarber
                 Phone = "0712345678"
             };
 
+            var barberShopName = "BarsherShop";
 
-            var addbarberCommand = new AddNewBarberCommand(user, barber);
+            var command = new AddNewBarberCommand(user, barber, barberShopName);
 
             // Act
-            var result = await _handler!.Handle(addbarberCommand, CancellationToken.None);
+            var result = await _handler!.Handle(command, CancellationToken.None);
 
             // Assert
             NUnit.Framework.Assert.That(result.FirstName, Is.EqualTo(barber.FirstName));
