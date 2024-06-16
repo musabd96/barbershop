@@ -23,9 +23,18 @@ namespace Infrastructure.Repositories.Appointments
                 var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
                 var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
 
-                List<Appointment> allAppointments = await _appDbContext.Appointment.Where(a => a.CustomerId == customer.CustomerId).ToListAsync();
+                if (customer != null)
+                {
+                    List<Appointment> allAppointments = await _appDbContext.Appointment.Where(a => a.CustomerId == customer.CustomerId).ToListAsync();
 
-                return allAppointments;
+                    return allAppointments;
+                }
+
+                var barber = _appDbContext.UserBarbers.FirstOrDefault(ub => ub.UserId == user!.Id);
+
+                List<Appointment> allAppointment = await _appDbContext.Appointment.Where(a => a.BarberId == barber!.BarberId).ToListAsync();
+
+                return allAppointment;
             }
             catch (Exception ex)
             {
@@ -76,6 +85,14 @@ namespace Infrastructure.Repositories.Appointments
                     {
                         AppointmentId = newAppointment.Id,
                         CustomerId = customer!.CustomerId,
+                    });
+                await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                _appDbContext.AppointmentBarbers.Add(
+                    new AppointmentRelationships.AppointmentBarber
+                    {
+                        AppointmentId = newAppointment.Id,
+                        BarberId = newAppointment.BarberId,
                     });
                 await _appDbContext.SaveChangesAsync(cancellationToken);
 

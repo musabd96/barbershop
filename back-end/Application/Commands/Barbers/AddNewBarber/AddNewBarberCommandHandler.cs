@@ -28,7 +28,7 @@ namespace Application.Commands.Barbers.AddNewBarber
 
             Barber newBarber = new Barber()
             {
-                Id = request.NewBarber.Id,
+                Id = Guid.NewGuid(),
                 FirstName = request.NewBarber.FirstName,
                 LastName = request.NewBarber.LastName,
                 Email = request.NewBarber.Email,

@@ -18,7 +18,7 @@ namespace Application.Commands.Appointments.AddNewAppoinment
             Appointment newAppointment = new Appointment()
             {
                 Id = Guid.NewGuid(),
-                BarberId = request.NewAppointment.CustomerId,
+                BarberId = request.NewAppointment.BarberId,
                 AppointmentDate = request.NewAppointment.AppointmentDate,
                 Service = request.NewAppointment.Service,
                 Price = request.NewAppointment.Price,
