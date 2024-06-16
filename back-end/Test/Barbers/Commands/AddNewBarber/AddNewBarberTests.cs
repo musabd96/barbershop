@@ -1,12 +1,9 @@
 ﻿using Application.Commands.Barbers.AddNewBarber;
 using Application.Dtos;
-using Domain.Models.Barbers;
-using Domain.Models.Customers;
 using Domain.Models.Users;
 using Infrastructure.Repositories.Barbers;
 using Moq;
 using NUnit.Framework;
-using static Domain.Models.Users.UserRelationships;
 
 
 namespace Test.Barber.Commands.AddNewBarber

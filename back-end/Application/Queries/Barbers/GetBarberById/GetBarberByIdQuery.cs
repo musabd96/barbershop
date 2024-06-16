@@ -5,9 +5,9 @@ namespace Application.Queries.Barbers.GetBarberById
 {
     public class GetBarberByIdQuery : IRequest<Barber>
     {
-        public GetBarberByIdQuery(Guid barbertId)
+        public GetBarberByIdQuery(Guid barberId)
         {
-            Id = barbertId;
+            Id = barberId;
         }
 
         public Guid Id { get; set; }

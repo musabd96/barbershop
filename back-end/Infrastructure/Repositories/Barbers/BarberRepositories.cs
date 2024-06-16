@@ -96,16 +96,16 @@ namespace Infrastructure.Repositories.Barbers
         {
             try
             {
-                Barber barberToUpdate = await _appDbContext.Barber.FirstOrDefaultAsync(barber => barber.Id == barberId);
+                Barber barberToDelete = await _appDbContext.Barber.FirstOrDefaultAsync(barber => barber.Id == barberId);
 
-                if (barberToUpdate != null)
+                if (barberToDelete != null)
                 {
 
 
-                    _appDbContext.Barber.Remove(barberToUpdate);
+                    _appDbContext.Barber.Remove(barberToDelete);
                     await _appDbContext.SaveChangesAsync(cancellationToken);
 
-                    return barberToUpdate;
+                    return barberToDelete;
                 }
 
                 return null!;

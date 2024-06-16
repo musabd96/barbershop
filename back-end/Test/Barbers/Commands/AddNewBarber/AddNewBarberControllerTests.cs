@@ -2,12 +2,8 @@
 
 using API.Controllers.BarberController;
 using Application.Commands.Barbers.AddNewBarber;
-using Application.Commands.Users.Register;
 using Application.Dtos;
 using Application.Validators.Barber;
-using Domain.Models.Barbers;
-using Domain.Models.Customers;
-using Domain.Models.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

@@ -1,5 +1,6 @@
 ﻿using Domain.Models.Appointments;
 using Domain.Models.Barbers;
+using Domain.Models.BarberShops;
 using Domain.Models.Customers;
 using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace Infrastructure.Database
 
         public DbSet<Appointment> Appointment { get; set; }
         public DbSet<Barber> Barber { get; set; }
+        public DbSet<BarberShop> BarberShop { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<User> User { get; set; }
 
@@ -35,7 +37,7 @@ namespace Infrastructure.Database
 
             // Seed data
             DbSeed.SeedAppointments(modelBuilder);
-            //DbSeed.SeedBarbers(modelBuilder);
+            DbSeed.SeedBarberShops(modelBuilder);
             //DbSeed.SeedCustomers(modelBuilder);
 
             // Define relationships between User and Customer
