@@ -16,7 +16,7 @@ namespace Application.Queries.Barbers.GetAllBarbers
         public async Task<List<Barber>> Handle(GetAllBarbersQuery request, CancellationToken cancellationToken)
         {
             List<Barber> AllBarbers = await _barberRepositories.GetAllBarbers(cancellationToken);
-            return AllBarbers ?? throw new InvalidOperationException("No appointments were found");
+            return AllBarbers;
         }
     }
 }

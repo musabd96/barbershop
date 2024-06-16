@@ -8,6 +8,7 @@ using Infrastructure.Repositories.Customers;
 using Infrastructure.Repositories.Users;
 using Infrastructure.Repositories.Authorization;
 using Infrastructure.Services;
+using Infrastructure.Repositories.BarberShops;
 
 namespace Infrastructure
 {
@@ -17,6 +18,7 @@ namespace Infrastructure
         {
             services.AddScoped<IAppointmentRepositories, AppointmentRepositories>();
             services.AddScoped<IBarberRepositories, BarberRepositories>();
+            services.AddScoped<IBarberShopRepositories, BarberShopRepositories>();
             services.AddScoped<ICustomerRepositories, CustomerRepositories>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthRepository, AuthRepository>();
