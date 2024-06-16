@@ -2,9 +2,7 @@
 using Domain.Models.BarberShops;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
-using System.Numerics;
-using System.Xml.Linq;
-
+using static Domain.Models.BarberShops.BarberShopRelationships;
 namespace Infrastructure.Repositories.BarberShops
 {
     public class BarberShopRepositories : IBarberShopRepositories
@@ -28,6 +26,20 @@ namespace Infrastructure.Repositories.BarberShops
             {
                 throw new Exception("An error occurred while getting all barbershops  from the database", ex);
             }
+        }
+
+        public async Task<List<Barber>> GetAllBarberShopStaff(string barberShopName, CancellationToken cancellationToken)
+        {
+            BarberShop barberShop = await _appDbContext.BarberShop.FirstOrDefaultAsync(barberShop => barberShop.Name == barberShopName);
+
+            List<BarberShopBarber> allBarberShops = await _appDbContext.BarberShopBarbers.Where(bs => bs.BarberShopId == barberShop.Id).ToListAsync(cancellationToken);
+
+            var barberIds = allBarberShops.Select(bsb => bsb.BarberId).ToList();
+
+            List<Barber> allBarbers = await _appDbContext.Barber.Where(b => barberIds.Contains(b.Id))
+                                                                .ToListAsync(cancellationToken);
+
+            return allBarbers;
         }
 
         public async Task<BarberShop> GetBarberShopById(Guid id, CancellationToken cancellationToken)
@@ -114,5 +126,6 @@ namespace Infrastructure.Repositories.BarberShops
                 throw new Exception("An error occurred while deleting the barbershop to the database", ex);
             }
         }
+
     }
 }

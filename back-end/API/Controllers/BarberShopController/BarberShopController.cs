@@ -2,15 +2,17 @@
 using Application.Commands.BarberShops.AddNewBarberShop;
 using Application.Commands.BarberShops.DeleteBarberShop;
 using Application.Commands.BarberShops.UpdateBarberShop;
-using Application.Commands.Customers.AddCustomer;
 using Application.Dtos;
 using Application.Queries.BarberShops.GetAllBarberShops;
+using Application.Queries.BarberShops.GetAllBarberShopStaff;
 using Application.Queries.BarberShops.GetBarberShopById;
 using Application.Validators.BarberShop;
+using Domain.Models.Barbers;
 using Domain.Models.BarberShops;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static Domain.Models.BarberShops.BarberShopRelationships;
 
 namespace API.Controllers.BarberShopController
 {
@@ -27,7 +29,6 @@ namespace API.Controllers.BarberShopController
             _validator = validator;
         }
 
-
         //Get all barberShops
         [HttpGet]
         [Route("getAllBarberShops")]
@@ -43,6 +44,29 @@ namespace API.Controllers.BarberShopController
                     return Ok(barberShops);
                 }
                 ModelState.AddModelError("BarberShopNotFound", $"There is no barbershops found");
+                return BadRequest(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        //Get all barbershop's staf 
+        [HttpGet]
+        [Route("getAllBarberShopStaff/{barberShopName}")]
+        public async Task<IActionResult> GetAllBarberShopStaff(string barberShopName)
+        {
+            try
+            {
+                var query = new GetAllBarberShopStaffQuery(barberShopName);
+                var result = await _mediator.Send(query);
+
+                if (result is List<Barber> barberShops && barberShops.Count > 0)
+                {
+                    return Ok(barberShops);
+                }
+                ModelState.AddModelError("BarberShopNoStaff", $"The barbershop '{barberShopName}' does not have any staff members.");
                 return BadRequest(ModelState);
             }
             catch (Exception ex)
