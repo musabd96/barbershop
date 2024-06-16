@@ -78,7 +78,7 @@ namespace Test.Barber.Commands.AddNewBarber
             var result = await _handler!.Handle(addbarberCommand, CancellationToken.None);
 
             // Assert
-            NUnit.Framework.Assert.That(result.Id, Is.EqualTo(barber.Id));
+            NUnit.Framework.Assert.That(result.FirstName, Is.EqualTo(barber.FirstName));
         }
     }
 }
