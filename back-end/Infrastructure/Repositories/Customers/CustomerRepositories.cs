@@ -16,7 +16,7 @@ namespace Infrastructure.Repositories.Customers
         {
             try
             {
-                List<Customer> allCustomers = await _appDbContext.Customer.ToListAsync(cancellationToken);
+                List<Customer> allCustomers = await _appDbContext.Customers.ToListAsync(cancellationToken);
 
                 return allCustomers;
             }
@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories.Customers
         {
             try
             {
-                Customer? wantedCustomer = await _appDbContext.Customer
+                Customer? wantedCustomer = await _appDbContext.Customers
                     .FirstOrDefaultAsync(customer => customer.Id == id, cancellationToken);
 
                 return wantedCustomer!;
@@ -43,7 +43,7 @@ namespace Infrastructure.Repositories.Customers
         {
             try
             {
-                _appDbContext.Customer.Add(newCustomer);
+                _appDbContext.Customers.Add(newCustomer);
                 await _appDbContext.SaveChangesAsync(cancellationToken);
                 return newCustomer;
             }
@@ -58,13 +58,13 @@ namespace Infrastructure.Repositories.Customers
         {
             try
             {
-                Customer customerToUpdate = await _appDbContext.Customer.FirstOrDefaultAsync(customer => customer.Id == customerId);
+                Customer customerToUpdate = await _appDbContext.Customers.FirstOrDefaultAsync(customer => customer.Id == customerId);
 
                 if (customerToUpdate != null)
                 {
 
 
-                    _appDbContext.Customer.Remove(customerToUpdate);
+                    _appDbContext.Customers.Remove(customerToUpdate);
                     await _appDbContext.SaveChangesAsync(cancellationToken);
 
                     return customerToUpdate;
@@ -82,7 +82,7 @@ namespace Infrastructure.Repositories.Customers
         {
             try
             {
-                Customer customerToUpdate = await _appDbContext.Customer.FirstOrDefaultAsync(customer => customer.Id == customerId);
+                Customer customerToUpdate = await _appDbContext.Customers.FirstOrDefaultAsync(customer => customer.Id == customerId);
 
                 if (customerToUpdate != null)
                 {
@@ -91,7 +91,7 @@ namespace Infrastructure.Repositories.Customers
                     customerToUpdate.Email = Email;
                     customerToUpdate.Phone = Phone;
 
-                    _appDbContext.Customer.Update(customerToUpdate);
+                    _appDbContext.Customers.Update(customerToUpdate);
                     await _appDbContext.SaveChangesAsync(cancellationToken);
 
                     return customerToUpdate;

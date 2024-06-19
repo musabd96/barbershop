@@ -28,7 +28,7 @@ namespace Infrastructure.Services
             if (newAppointment == null)
                 throw new ArgumentNullException(nameof(newAppointment));
 
-            var customerInfo = _appDbContext.Customer.FirstOrDefault(ci => ci.Id == newAppointment.CustomerId);
+            var customerInfo = _appDbContext.Customers.FirstOrDefault(ci => ci.Id == newAppointment.CustomerId);
 
             if (customerInfo == null)
                 throw new ArgumentException("Customer information not found.", nameof(newAppointment));

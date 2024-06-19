@@ -25,14 +25,14 @@ namespace Infrastructure.Repositories.Appointments
 
                 if (customer != null)
                 {
-                    List<Appointment> allAppointments = await _appDbContext.Appointment.Where(a => a.CustomerId == customer.CustomerId).ToListAsync();
+                    List<Appointment> allAppointments = await _appDbContext.Appointments.Where(a => a.CustomerId == customer.CustomerId).ToListAsync();
 
                     return allAppointments;
                 }
 
                 var barber = _appDbContext.UserBarbers.FirstOrDefault(ub => ub.UserId == user!.Id);
 
-                List<Appointment> allAppointment = await _appDbContext.Appointment.Where(a => a.BarberId == barber!.BarberId).ToListAsync();
+                List<Appointment> allAppointment = await _appDbContext.Appointments.Where(a => a.BarberId == barber!.BarberId).ToListAsync();
 
                 return allAppointment;
             }
@@ -49,17 +49,17 @@ namespace Infrastructure.Repositories.Appointments
                 var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
                 var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
 
-                var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId && ac.AppointmentId == id);
+                //var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId && ac.AppointmentId == id);
 
-                if (appointmentCustomer != null)
-                {
-                    Appointment? wantedAppointment = await _appDbContext.Appointment
-                    .FirstOrDefaultAsync(appointment => appointment.Id == id, cancellationToken);
+                //if (appointmentCustomer != null)
+                //{
+                Appointment? wantedAppointment = await _appDbContext.Appointments
+                .FirstOrDefaultAsync(appointment => appointment.Id == id, cancellationToken);
 
-                    return wantedAppointment!;
-                }
+                return wantedAppointment!;
+                //}
 
-                return null!;
+                //return null!;
 
             }
             catch (Exception ex)
@@ -77,23 +77,7 @@ namespace Infrastructure.Repositories.Appointments
                 var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
 
                 newAppointment.CustomerId = customer!.CustomerId;
-                _appDbContext.Appointment.Add(newAppointment);
-                await _appDbContext.SaveChangesAsync(cancellationToken);
-
-                _appDbContext.AppointmentCustomers.Add(
-                    new AppointmentRelationships.AppointmentCustomer
-                    {
-                        AppointmentId = newAppointment.Id,
-                        CustomerId = customer!.CustomerId,
-                    });
-                await _appDbContext.SaveChangesAsync(cancellationToken);
-
-                _appDbContext.AppointmentBarbers.Add(
-                    new AppointmentRelationships.AppointmentBarber
-                    {
-                        AppointmentId = newAppointment.Id,
-                        BarberId = newAppointment.BarberId,
-                    });
+                _appDbContext.Appointments.Add(newAppointment);
                 await _appDbContext.SaveChangesAsync(cancellationToken);
 
                 // Send booking confirmation email delete this when front end finished
@@ -114,24 +98,24 @@ namespace Infrastructure.Repositories.Appointments
                 var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
                 var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
 
-                var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId && ac.AppointmentId == appointmentId);
+                //var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId && ac.AppointmentId == appointmentId);
 
-                if (appointmentCustomer != null)
-                {
-                    Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
+                //if (appointmentCustomer != null)
+                //{
+                Appointment appointmentToUpdate = await _appDbContext.Appointments.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
 
-                    appointmentToUpdate!.BarberId = barberId;
-                    appointmentToUpdate.AppointmentDate = appointmentDate;
-                    appointmentToUpdate.Service = service;
-                    appointmentToUpdate.Price = price;
-                    appointmentToUpdate.IsCancelled = isCancelled;
+                appointmentToUpdate!.BarberId = barberId;
+                appointmentToUpdate.AppointmentDate = appointmentDate;
+                appointmentToUpdate.Service = service;
+                appointmentToUpdate.Price = price;
+                appointmentToUpdate.IsCanceled = isCancelled;
 
-                    _appDbContext.Appointment.Update(appointmentToUpdate);
-                    await _appDbContext.SaveChangesAsync(cancellationToken);
+                _appDbContext.Appointments.Update(appointmentToUpdate);
+                await _appDbContext.SaveChangesAsync(cancellationToken);
 
-                    return appointmentToUpdate;
-                }
-                return null!;
+                return appointmentToUpdate;
+                //}
+                //return null!;
             }
             catch (Exception ex)
             {
@@ -146,20 +130,20 @@ namespace Infrastructure.Repositories.Appointments
                 var user = _appDbContext.User.FirstOrDefault(u => u.Username == userName);
                 var customer = _appDbContext.UserCustomers.FirstOrDefault(uc => uc.UserId == user!.Id);
 
-                var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId && ac.AppointmentId == appointmentId);
+                //var appointmentCustomer = _appDbContext.AppointmentCustomers.FirstOrDefault(ac => ac.CustomerId == customer.CustomerId && ac.AppointmentId == appointmentId);
 
-                if (appointmentCustomer != null)
-                {
-                    Appointment appointmentToUpdate = await _appDbContext.Appointment.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
+                //if (appointmentCustomer != null)
+                //{
+                Appointment appointmentToUpdate = await _appDbContext.Appointments.FirstOrDefaultAsync(appointment => appointment.Id == appointmentId);
 
-                    _appDbContext.Appointment.Remove(appointmentToUpdate);
-                    await _appDbContext.SaveChangesAsync(cancellationToken);
+                _appDbContext.Appointments.Remove(appointmentToUpdate);
+                await _appDbContext.SaveChangesAsync(cancellationToken);
 
-                    return appointmentToUpdate;
+                return appointmentToUpdate;
 
-                }
+                //}
 
-                return null!;
+                //return null!;
             }
             catch (Exception ex)
             {

@@ -57,7 +57,7 @@ namespace Test.Appointment.Queries.GetAll
                     AppointmentDate = new DateTime(),
                     Service = "Hair",
                     Price = 20.0m,
-                    IsCancelled = false,
+                    IsCanceled = false,
                 },
                 new () {
                     Id = new Guid(),
@@ -66,7 +66,7 @@ namespace Test.Appointment.Queries.GetAll
                     AppointmentDate = new DateTime(),
                     Service = "beard",
                     Price = 20.0m,
-                    IsCancelled = false,
+                    IsCanceled = false,
                 }
             };
             var username = "test";

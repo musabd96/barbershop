@@ -1,10 +1,6 @@
-﻿
-using Application.Queries.BarberShops.GetAllBarberShops;
-using Domain.Models.Barbers;
-using Domain.Models.BarberShops;
+﻿using Domain.Models.Barbers;
 using Infrastructure.Repositories.BarberShops;
 using MediatR;
-using static Domain.Models.BarberShops.BarberShopRelationships;
 
 namespace Application.Queries.BarberShops.GetAllBarberShopStaff
 {

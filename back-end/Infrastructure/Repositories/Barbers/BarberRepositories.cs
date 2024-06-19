@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories.Barbers
         {
             try
             {
-                List<Barber> allBarbers = await _appDbContext.Barber.ToListAsync(cancellationToken);
+                List<Barber> allBarbers = await _appDbContext.Barbers.ToListAsync(cancellationToken);
 
                 return allBarbers;
             }
@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories.Barbers
         {
             try
             {
-                Barber? wantedBarber = await _appDbContext.Barber
+                Barber? wantedBarber = await _appDbContext.Barbers
                     .FirstOrDefaultAsync(barber => barber.Id == id, cancellationToken);
 
                 return wantedBarber!;
@@ -46,7 +46,10 @@ namespace Infrastructure.Repositories.Barbers
         {
             try
             {
-                _appDbContext.Barber.Add(newBarber);
+                var barberShopInfo = _appDbContext.BarberShops.FirstOrDefault(bS => bS.Name == barbershopName);
+                newBarber.BarbershopId = barberShopInfo.Id;
+
+                _appDbContext.Barbers.Add(newBarber);
                 _appDbContext.User.Add(userToCreate);
                 await _appDbContext.SaveChangesAsync(cancellationToken);
 
@@ -58,15 +61,7 @@ namespace Infrastructure.Repositories.Barbers
                     });
                 await _appDbContext.SaveChangesAsync(cancellationToken);
 
-                var barberShopInfo = _appDbContext.BarberShop.FirstOrDefault(bS => bS.Name == barbershopName);
 
-                _appDbContext.BarberShopBarbers.Add(
-                    new BarberShopRelationships.BarberShopBarber
-                    {
-                        BarberShopId = barberShopInfo!.Id,
-                        BarberId = newBarber.Id
-                    });
-                await _appDbContext.SaveChangesAsync(cancellationToken);
 
                 return await Task.FromResult(newBarber);
             }
@@ -80,7 +75,7 @@ namespace Infrastructure.Repositories.Barbers
         {
             try
             {
-                Barber barberToUpdate = await _appDbContext.Barber.FirstOrDefaultAsync(barber => barber.Id == barberId);
+                Barber barberToUpdate = await _appDbContext.Barbers.FirstOrDefaultAsync(barber => barber.Id == barberId);
 
                 if (barberToUpdate != null)
                 {
@@ -89,7 +84,7 @@ namespace Infrastructure.Repositories.Barbers
                     barberToUpdate.Email = email;
                     barberToUpdate.Phone = phone;
 
-                    _appDbContext.Barber.Update(barberToUpdate);
+                    _appDbContext.Barbers.Update(barberToUpdate);
                     await _appDbContext.SaveChangesAsync(cancellationToken);
 
                     return barberToUpdate;
@@ -107,13 +102,13 @@ namespace Infrastructure.Repositories.Barbers
         {
             try
             {
-                Barber barberToDelete = await _appDbContext.Barber.FirstOrDefaultAsync(barber => barber.Id == barberId);
+                Barber barberToDelete = await _appDbContext.Barbers.FirstOrDefaultAsync(barber => barber.Id == barberId);
 
                 if (barberToDelete != null)
                 {
 
 
-                    _appDbContext.Barber.Remove(barberToDelete);
+                    _appDbContext.Barbers.Remove(barberToDelete);
                     await _appDbContext.SaveChangesAsync(cancellationToken);
 
                     return barberToDelete;

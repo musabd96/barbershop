@@ -90,7 +90,8 @@ namespace API.Controllers.BarberController
                     return BadRequest(ModelState);
                 }
 
-                return Ok(await _mediator.Send(command));
+                var result = await _mediator.Send(command);
+                return Ok("New barber added successfully.");
             }
             catch (Exception ex)
             {

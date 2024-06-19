@@ -37,7 +37,7 @@ namespace Test.Appointment.Queries.GetById
                 AppointmentDate = DateTime.Now.AddDays(1),
                 Service = "Haircut",
                 Price = 399.00M,
-                IsCancelled = false
+                IsCanceled = false
             };
 
             SetupMockDbContext(expectedAppointment);

@@ -26,21 +26,24 @@ namespace API.Controllers.AuthenticationController
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
-            var inputValidation = _userValidator.Validate(command.NewUser);
-
-            if (!inputValidation.IsValid)
-            {
-                return BadRequest(inputValidation.Errors.ConvertAll(errors => errors.ErrorMessage));
-            }
-
             try
             {
-                return Ok(await _mediator.Send(command));
+                var inputValidation = _userValidator.Validate(command.NewUser);
+
+                if (!inputValidation.IsValid)
+                {
+                    return BadRequest(inputValidation.Errors.ConvertAll(errors => errors.ErrorMessage));
+                }
+
+                var result = await _mediator.Send(command);
+                return Ok("User registered successfully.");
+
             }
             catch (ArgumentException e)
             {
                 return BadRequest(e.Message);
             }
+
         }
 
 

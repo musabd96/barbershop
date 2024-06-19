@@ -22,7 +22,7 @@ namespace Application.Commands.Appointments.AddNewAppoinment
                 AppointmentDate = request.NewAppointment.AppointmentDate,
                 Service = request.NewAppointment.Service,
                 Price = request.NewAppointment.Price,
-                IsCancelled = request.NewAppointment.IsCancelled,
+                IsCanceled = request.NewAppointment.IsCancelled,
             };
 
             await _appointmentRepositories.AddNewAppoinment(newAppointment, request.UserName, cancellationToken);
