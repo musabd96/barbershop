@@ -1,7 +1,6 @@
 ﻿
 using Domain.Models.Barbers;
 using Domain.Models.BarberShops;
-using static Domain.Models.BarberShops.BarberShopRelationships;
 
 namespace Infrastructure.Repositories.BarberShops
 {

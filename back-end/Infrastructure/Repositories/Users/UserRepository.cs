@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories.Users
         {
             try
             {
-                _appDbContext.Customer.Add(customerToRegister);
+                _appDbContext.Customers.Add(customerToRegister);
                 _appDbContext.User.Add(userToRegister);
                 await _appDbContext.SaveChangesAsync(cancellationToken);
 

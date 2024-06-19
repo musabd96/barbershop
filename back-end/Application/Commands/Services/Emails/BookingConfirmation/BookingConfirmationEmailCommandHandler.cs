@@ -25,7 +25,7 @@ namespace Application.Commands.Services.Emails.BookingConfirmation
                 AppointmentDate = request.AppointmentDto.AppointmentDate,
                 Service = request.AppointmentDto.Service,
                 Price = request.AppointmentDto.Price,
-                IsCancelled = request.AppointmentDto.IsCancelled,
+                IsCanceled = request.AppointmentDto.IsCancelled,
             };
 
             await _emailService.SendBookingConfirmed(request.UserName, newAppointment, cancellationToken);

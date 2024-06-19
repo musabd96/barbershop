@@ -2,7 +2,6 @@
 using Domain.Models.BarberShops;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
-using static Domain.Models.BarberShops.BarberShopRelationships;
 namespace Infrastructure.Repositories.BarberShops
 {
     public class BarberShopRepositories : IBarberShopRepositories
@@ -18,7 +17,7 @@ namespace Infrastructure.Repositories.BarberShops
         {
             try
             {
-                List<BarberShop> allBarberShops = await _appDbContext.BarberShop.ToListAsync(cancellationToken);
+                List<BarberShop> allBarberShops = await _appDbContext.BarberShops.ToListAsync(cancellationToken);
 
                 return allBarberShops;
             }
@@ -30,14 +29,10 @@ namespace Infrastructure.Repositories.BarberShops
 
         public async Task<List<Barber>> GetAllBarberShopStaff(string barberShopName, CancellationToken cancellationToken)
         {
-            BarberShop barberShop = await _appDbContext.BarberShop.FirstOrDefaultAsync(barberShop => barberShop.Name == barberShopName);
+            BarberShop barberShop = await _appDbContext.BarberShops.FirstOrDefaultAsync(barberShop => barberShop.Name == barberShopName);
 
-            List<BarberShopBarber> allBarberShops = await _appDbContext.BarberShopBarbers.Where(bs => bs.BarberShopId == barberShop.Id).ToListAsync(cancellationToken);
-
-            var barberIds = allBarberShops.Select(bsb => bsb.BarberId).ToList();
-
-            List<Barber> allBarbers = await _appDbContext.Barber.Where(b => barberIds.Contains(b.Id))
-                                                                .ToListAsync(cancellationToken);
+            List<Barber> allBarbers = await _appDbContext.Barbers.Where(b => b.BarbershopId == barberShop.Id)
+                                                                 .ToListAsync(cancellationToken);
 
             return allBarbers;
         }
@@ -46,7 +41,7 @@ namespace Infrastructure.Repositories.BarberShops
         {
             try
             {
-                BarberShop? wantedBarberShop = await _appDbContext.BarberShop
+                BarberShop? wantedBarberShop = await _appDbContext.BarberShops
                     .FirstOrDefaultAsync(barber => barber.Id == id, cancellationToken);
 
                 return wantedBarberShop!;
@@ -61,7 +56,7 @@ namespace Infrastructure.Repositories.BarberShops
         {
             try
             {
-                _appDbContext.BarberShop.Add(newBarberShop);
+                _appDbContext.BarberShops.Add(newBarberShop);
                 await _appDbContext.SaveChangesAsync(cancellationToken);
 
                 return await Task.FromResult(newBarberShop);
@@ -77,7 +72,7 @@ namespace Infrastructure.Repositories.BarberShops
         {
             try
             {
-                BarberShop barberShopToUpdate = await _appDbContext.BarberShop.FirstOrDefaultAsync(barberShop => barberShop.Id == barberShopId);
+                BarberShop barberShopToUpdate = await _appDbContext.BarberShops.FirstOrDefaultAsync(barberShop => barberShop.Id == barberShopId);
 
                 if (barberShopToUpdate != null)
                 {
@@ -89,7 +84,7 @@ namespace Infrastructure.Repositories.BarberShops
                     barberShopToUpdate.City = city;
 
 
-                    _appDbContext.BarberShop.Update(barberShopToUpdate);
+                    _appDbContext.BarberShops.Update(barberShopToUpdate);
                     await _appDbContext.SaveChangesAsync(cancellationToken);
 
                     return barberShopToUpdate;
@@ -107,13 +102,13 @@ namespace Infrastructure.Repositories.BarberShops
         {
             try
             {
-                BarberShop barberShopToDelete = await _appDbContext.BarberShop.FirstOrDefaultAsync(barberShop => barberShop.Id == id);
+                BarberShop barberShopToDelete = await _appDbContext.BarberShops.FirstOrDefaultAsync(barberShop => barberShop.Id == id);
 
                 if (barberShopToDelete != null)
                 {
 
 
-                    _appDbContext.BarberShop.Remove(barberShopToDelete);
+                    _appDbContext.BarberShops.Remove(barberShopToDelete);
                     await _appDbContext.SaveChangesAsync(cancellationToken);
 
                     return barberShopToDelete;

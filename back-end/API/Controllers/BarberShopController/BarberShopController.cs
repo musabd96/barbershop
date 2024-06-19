@@ -12,7 +12,6 @@ using Domain.Models.BarberShops;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static Domain.Models.BarberShops.BarberShopRelationships;
 
 namespace API.Controllers.BarberShopController
 {

@@ -53,7 +53,7 @@ namespace Test.Appointment.Queries.GetById
                 AppointmentDate = DateTime.Now,
                 Service = "Hair",
                 Price = 20.0m,
-                IsCancelled = false
+                IsCanceled = false
             };
             var username = "test";
             var query = new GetAppointmentByIdQuery(expectedAppointment.Id, username);

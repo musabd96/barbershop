@@ -50,7 +50,7 @@ namespace Test.Appointment.Commands.UpdateAppointment
                                           appointment.AppointmentDate = date;
                                           appointment.Service = service;
                                           appointment.Price = price;
-                                          appointment.IsCancelled = isCancelled;
+                                          appointment.IsCanceled = isCancelled;
                                           return appointment;
                                       }
                                       return null;
@@ -72,7 +72,7 @@ namespace Test.Appointment.Commands.UpdateAppointment
                     AppointmentDate = DateTime.Now.AddDays(1),
                     Service = "Haircut",
                     Price = 25.00m,
-                    IsCancelled = false
+                    IsCanceled = false
                 }
             };
             SetupMockDbContext(appointments);
